@@ -1,5 +1,5 @@
 import React from 'react';
-import calculationService from '../Services/calculation.service';
+import calculationService from '../services/calculation.service';
 
 class BasicCalculation extends React.Component {
   constructor(props) {
