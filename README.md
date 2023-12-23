@@ -6,6 +6,7 @@ The "Deterministic Models for Lot Sizing" project is focused on developing an ap
 ## Technology Stack
 - **Java**: Version 21.0.1
 - **React**: Version 18.2.0
+- **NodeJS**: Version 20.10.0-LTS
 - **Visual Studio Code (VSC)**: Version 1.85.0
 - **IntelliJ IDEA**: Version 11.0.10
 - **Libraries**:

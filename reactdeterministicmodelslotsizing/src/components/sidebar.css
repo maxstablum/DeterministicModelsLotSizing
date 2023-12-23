@@ -1,0 +1,37 @@
+.sidebarStyle {
+    width: 250px;
+    height: 100vh;
+    background-color: #2C3E50;
+    color: #ECF0F1;
+    padding: 20px;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.titleStyle {
+    font-size: 24px;
+    border-bottom: 2px solid #3498DB;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.navItemStyle {
+    list-style: none;
+    padding: 0;
+    padding-bottom: 10px;
+}
+
+.nav-link {
+    padding: 10px 0;
+    cursor: pointer;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #34495E;
+}
