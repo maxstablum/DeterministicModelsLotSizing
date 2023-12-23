@@ -1,2 +1,5 @@
-package com.example.deterministicmodelslotsizing.controller;public class WagnerWhitinController {
+package com.example.deterministicmodelslotsizing.controller;
+
+public class WagnerWhitinController {
+
 }

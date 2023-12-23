@@ -2,14 +2,14 @@ import React from 'react';
 import calculationService from '../services/calculation.service';
 
 class BasicCalculation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value1: 0,
-      value2: 0,
-      sum: null,  
-    };
-  }
+    constructor(props) {
+      super(props);
+      this.state = {
+        value1: 0,
+        value2: 0,
+        sum: null,  
+      };
+    }
 
   handleInputChange = (event) => {
     const target = event.target;

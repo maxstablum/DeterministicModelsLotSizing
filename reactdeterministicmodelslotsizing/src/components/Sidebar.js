@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 const sidebarStyle = {
     width: '250px',
@@ -35,38 +35,53 @@ const navLinkStyle = (hover) => ({
     transition: 'background-color 0.3s ease'
 });
 
-    
+class Sidebar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hoverIndex: null
+        };
+    }
 
-const Sidebar = () => {
-    const [hoverIndex, setHoverIndex] = useState(null);
-
-    const handleMouseEnter = (index) => {
-        setHoverIndex(index);
+    handleMouseEnter = (index) => {
+        this.setState({ hoverIndex: index });
     };
 
-    const handleMouseLeave = () => {
-        setHoverIndex(null);
+    handleMouseLeave = () => {
+        this.setState({ hoverIndex: null });
     };
 
-    const navItems = ["Home", "EOQ", "Wagner Whitin"]; // Add more items as needed
-
-    return (
-        <div style={sidebarStyle}>
-            <h1 style={titleStyle}>Deterministic Models</h1>
-            <ul style={navItemStyle}>
-                {navItems.map((item, index) => (
+    render() {
+        return (
+            <div style={sidebarStyle}>
+                <h1 style={titleStyle}>Deterministic Models</h1>
+                <ul style={navItemStyle}>
                     <li 
-                        key={item}
-                        onMouseEnter={() => handleMouseEnter(index)}
-                        onMouseLeave={handleMouseLeave}
-                        style={navLinkStyle(index === hoverIndex)}
+                        style={navLinkStyle(this.state.hoverIndex === 0)}
+                        onMouseEnter={() => this.handleMouseEnter(0)}
+                        onMouseLeave={this.handleMouseLeave}
                     >
-                        {item}
+                    <Link to="/wagner-whitin" style={{ textDecoration: 'none', color: 'inherit' }}>Home</Link>
                     </li>
-                ))}
-            </ul>
-        </div>
-    );
-};
+                    <li 
+                        style={navLinkStyle(this.state.hoverIndex === 1)}
+                        onMouseEnter={() => this.handleMouseEnter(1)}
+                        onMouseLeave={this.handleMouseLeave}
+                    >
+                    <Link to="/eoq" style={{ textDecoration: 'none', color: 'inherit' }}>EOQ</Link>
+                    </li>
+                    <li 
+                        style={navLinkStyle(this.state.hoverIndex === 2)}
+                        onMouseEnter={() => this.handleMouseEnter(2)}
+                        onMouseLeave={this.handleMouseLeave}
+                    >
+                        <Link to="/wagner-whitin" style={{ textDecoration: 'none', color: 'inherit' }}>Wagner Whitin</Link>
+                    </li>
+                    {/* Weitere Elemente können hier hinzugefügt werden */}
+                </ul>
+            </div>
+        );
+    }
+}
 
 export default Sidebar;
