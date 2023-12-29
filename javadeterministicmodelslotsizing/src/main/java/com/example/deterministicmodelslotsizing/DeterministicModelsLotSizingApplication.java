@@ -23,7 +23,8 @@ public class DeterministicModelsLotSizingApplication {
         wwa.calculate();
 
         EOQ eoq1 = new EOQ();
-        eoq1.eoqMethod();
+        System.out.println(eoq1.eoqMethod(19, 52, 45, 15));
+        System.out.println(eoq1.sensitivityAnalysis());
 
     }
 
