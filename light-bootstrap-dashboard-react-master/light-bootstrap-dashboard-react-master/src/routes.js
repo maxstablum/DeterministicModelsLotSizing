@@ -24,6 +24,8 @@ import Icons from "views/Icons.js";
 import Maps from "views/Maps.js";
 import Notifications from "views/Notifications.js";
 
+import EOQTest from "services/eoq.js";
+
 const dashboardRoutes = [
   {
     path: "/homepage",
@@ -37,6 +39,13 @@ const dashboardRoutes = [
     name: "eoq",
     icon: "nc-icon nc-app",
     component: EOQ,
+    layout: "/admin",
+  },
+  {
+    path: "/eoqTest",
+    name: "EOQTest",
+    icon: "nc-icon nc-app",
+    component: EOQTest,
     layout: "/admin",
   },
   {
