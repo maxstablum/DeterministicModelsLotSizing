@@ -1,6 +1,10 @@
 package com.example.deterministicmodelslotsizing.wagnerwhitin;
 import java.util.Arrays;
 
+/**
+ * Class to calculate thr Wagner-Whitin algorithm
+ * @author    Tamino Gaub & Maximilian Stablum
+ */
 public class WagnerWhitinAlgorithm {
 
     private int[] demands;
@@ -39,7 +43,7 @@ public class WagnerWhitinAlgorithm {
             orderSchedule[j] = 0;
         }
 
-        // Now, we'll check each period, starting from week 1 onwards, to see if it's cheaper to start production there.
+        // Check each period, starting from week 1 onwards, to see if it's cheaper to start production there.
         for (int startWeek = 1; startWeek < demands.length; startWeek++) {
             // For each starting week, we consider ending weeks up to the end of the demand array.
             for (int endWeek = startWeek; endWeek < demands.length; endWeek++) {
@@ -103,5 +107,18 @@ public class WagnerWhitinAlgorithm {
             System.out.printf("%-5d", j + 1);
         }
         System.out.println(); // Move to the next line after printing the entire row.
+    }
+
+    // Getters
+    public int[] getTotalCost() {
+        return totalCost;
+    }
+
+    public int[] getOrderSchedule() {
+        return orderSchedule;
+    }
+
+    public int[][] getCostMatrix() {
+        return costMatrix;
     }
 }
