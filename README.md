@@ -20,9 +20,12 @@ The "Deterministic Models for Lot Sizing" project is focused on developing an ap
 To set up the project locally, follow these steps:
 
 1. **Initialize React project**:
+  Into the directory: frontend/light-bootstrap-dashboard-react-master
    ```bash
    npm install
+   npm install axios --legacy-peer-deps
    npm start
+   
 
 ## Contact Information
 Tamino Gaub - tamino.gaub@student.uibk.ac.at
