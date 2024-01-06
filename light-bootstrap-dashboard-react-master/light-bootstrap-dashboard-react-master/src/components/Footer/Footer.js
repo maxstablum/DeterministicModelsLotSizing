@@ -27,31 +27,19 @@ class Footer extends Component {
             <ul className="footer-menu">
               {/* Github Link for repository*/}
               <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Home
+                <a href="https://github.com/maxstablum/DeterministicModelsLotSizing">
+                  Github
                 </a>
               </li>
               {/* Contact Us Link*/}
               <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Company
-                </a>
-              </li>
-              <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Portfolio
-                </a>
-              </li>
-              <li>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Blog
+              <a href="mailto:maximilian.stablum@student.uibk.ac.at,tamino.gaub@student.uibk.ac.at">
+                  Contact Us
                 </a>
               </li>
             </ul>
             <p className="copyright text-center">
               © {new Date().getFullYear()}{" "}
-              <a href="http://www.creative-tim.com">Creative Tim</a>, made with
-              love for a better web
             </p>
           </nav>
         </Container>

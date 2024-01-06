@@ -21,9 +21,6 @@ import Team from "views/Team.js";
 import WagnerWhitin from "views/WagnerWhitin.js";
 
 // routes for the different pages
-=======
-import Proposal from "views/Proposal.js";
-
 const dashboardRoutes = [
   {
     path: "/homepage",
@@ -51,13 +48,6 @@ const dashboardRoutes = [
     name: "Team Members",
     icon: "nc-icon nc-circle-09",
     component: Team,
-    layout: "/admin",
-  },
-  {
-    path: "/proposal",
-    name: "Proposal",
-    icon: "nc-icon nc-circle-09",
-    component: Proposal,
     layout: "/admin",
   },
 ];

@@ -1,7 +1,5 @@
 package com.example.deterministicmodelslotsizing.wagnerwhitin;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Class to calculate thr Wagner-Whitin algorithm
@@ -26,6 +24,7 @@ public class WagnerWhitinAlgorithm {
         this.totalCost = new int[demands.length];
         this.orderSchedule = new int[demands.length];
         this.costMatrix = new int[demands.length][demands.length];
+        this.productionPeriods = new int[demands.length+1];
     }
 
     // Method to calculate the Wagner-Whitin algorithm
@@ -48,11 +47,10 @@ public class WagnerWhitinAlgorithm {
             // Set the production start week to 0 as we're considering production starts in the first week.
             orderSchedule[j] = 0;
         }
-        for (int z = 0;z< demands.length;z++){
-
-        }
 
         // Check each period, starting from week 1 onwards, to see if it's cheaper to start production there.
+        // startweek = Week considered to start production
+        // endweek = End of the planning horizon for one production schedule
         for (int startWeek = 1; startWeek < demands.length; startWeek++) {
             // For each starting week, we consider ending weeks up to the end of the demand array.
             for (int endWeek = startWeek; endWeek < demands.length; endWeek++) {
@@ -110,7 +108,6 @@ public class WagnerWhitinAlgorithm {
         System.out.println("------------------------------------------");
     }
 
-
     // Method to print the cost matrix and the order schedule.
     private void printCostMatrix() {
         // Print an empty space to align the header of the table.
@@ -161,5 +158,9 @@ public class WagnerWhitinAlgorithm {
 
     public int[][] getCostMatrix() {
         return costMatrix;
+    }
+
+    public int[] getProductionPeriods(){
+        return productionPeriods;
     }
 }
