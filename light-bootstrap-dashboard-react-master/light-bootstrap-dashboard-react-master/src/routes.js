@@ -17,7 +17,7 @@
 */
 import Homepage from "views/Homepage.js";
 import EOQ from "views/EOQ.js";
-import UserProfile from "views/UserProfile.js";
+import Team from "views/Team.js";
 import WagnerWhitin from "views/WagnerWhitin.js";
 import Typography from "views/Typography.js";
 import Icons from "views/Icons.js";
@@ -40,10 +40,10 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/user",
-    name: "User Profile",
+    path: "/team",
+    name: "Team Members",
     icon: "nc-icon nc-circle-09",
-    component: UserProfile,
+    component: Team,
     layout: "/admin",
   },
   {

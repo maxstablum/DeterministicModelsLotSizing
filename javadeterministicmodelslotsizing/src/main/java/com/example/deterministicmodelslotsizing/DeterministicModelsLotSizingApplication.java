@@ -13,7 +13,7 @@ public class DeterministicModelsLotSizingApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DeterministicModelsLotSizingApplication.class, args);
-
+        // Testing values for the Wagner Whitin
         int[] demands = {20,50,10,50,50,10,20,40,20,30}; // Ein Array von Integers mit spezifischen Werten
         int holdingCost = 1; // Kosten pro Einheit pro Periode
         int orderCost = 100; // Kosten pro Bestellung
