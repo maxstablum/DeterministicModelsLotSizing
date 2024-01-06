@@ -19,6 +19,7 @@ import Homepage from "views/Homepage.js";
 import EOQ from "views/EOQ.js";
 import Team from "views/Team.js";
 import WagnerWhitin from "views/WagnerWhitin.js";
+import Proposal from "views/Proposal";
 
 // routes for the different pages
 const dashboardRoutes = [
@@ -48,6 +49,13 @@ const dashboardRoutes = [
     name: "Team Members",
     icon: "nc-icon nc-circle-09",
     component: Team,
+    layout: "/admin",
+  },
+  {
+    path: "/proposal",
+    name: "Proposal",
+    icon: "nc-icon nc-circle-09",
+    component: Proposal,
     layout: "/admin",
   },
 ];
