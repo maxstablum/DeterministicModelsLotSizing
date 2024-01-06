@@ -4,8 +4,8 @@ import './index.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-import wagnerwhitin from './components/wagner-whitin/wagner-whitin.js';
-import EOQ from './components/EOQ/EOQ.js';
+import wagnerwhitin from './components/wagner-whitin/wagner-whitin';
+import EOQ from './components/eoq/eoq';
 
 
 
@@ -16,7 +16,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/wagner-whitin" element={<wagnerwhitin />} />
+      <Route path="/wagner-whitin" element={<wagnerwhitin/>} />
       <Route path="/eoq" element={<EOQ/>} />
     </Routes>
   </BrowserRouter>

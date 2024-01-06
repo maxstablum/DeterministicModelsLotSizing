@@ -1,9 +1,11 @@
 # Deterministic Models for Lot Sizing
 
 ## Description
+
 The "Deterministic Models for Lot Sizing" project is focused on developing an application that offers a user-friendly interface to calculate the Economic Order Quantity (EOQ) and Wagner-Whitin algorithm. This application aims to provide an efficient solution for lot sizing in production and inventory management.
 
 ## Technology Stack
+
 - **Java**: Version 21.0.1
 - **React**: Version 18.2.0
 - **NodeJS**: Version 20.10.0-LTS
@@ -17,15 +19,19 @@ The "Deterministic Models for Lot Sizing" project is focused on developing an ap
   - Maven: A project management and comprehension tool used primarily for Java projects. Maven addresses two aspects of building software: how software is built and its dependencies.
 
 ## Installation
+
 To set up the project locally, follow these steps:
 
 1. **Initialize React project**:
-  Into the directory: DeterministicModelsLotSizing/light-bootstrap-dashboard-react-master/light-bootstrap-dashboard-react-master
+ Into the directory: DeterministicModelsLotSizing/light-bootstrap-dashboard-react-master/light-bootstrap-dashboard-react-master
+
    ```bash
-   npm install --legacy-peer-deps
+   npm install
    npm install axios --legacy-peer-deps
+   npm install react-pdf --legacy-peer-deps
    npm start
-   
+
+   ```
 
 ## Contact Information
 Tamino Gaub - tamino.gaub@student.uibk.ac.at <br />

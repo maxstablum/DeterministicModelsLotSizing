@@ -1,3 +1,5 @@
+// WagnerWhitinResults.js
+
 import React, { Component } from 'react';
 import { Table, Card, Container, Row, Col } from 'react-bootstrap';
 
@@ -12,17 +14,14 @@ function removeDuplicates(arr) {
   }
   
 // WagnerWhitinResults component
+
 class WagnerWhitinResults extends Component {
-   
     render() {
         // Destructure the props
         const { totalCost, orderSchedule, costMatrix, productionPeriods } = this.props;
-        const lastTotalCost = totalCost[totalCost.length - 1]; // Get the last total cost
-        const filteredArray = filterArray(productionPeriods);
-        const orderScheduleArray = removeDuplicates(orderSchedule);
 
-        
-        
+        const lastTotalCost = totalCost[totalCost.length - 1]; // Get the last total cost
+
         // Inline styles
         const smallTableStyle = {
             fontSize: "0.8rem", // Smaller font size
@@ -74,11 +73,18 @@ class WagnerWhitinResults extends Component {
                                         </tr>
                                     </tbody>
                                 </Table>                             
+                                <h5>Total Cost</h5>
+                                <p>{lastTotalCost}</p>
+
+                                {/* Order Schedule Numbers */}
+                                <h5>Order Schedule Numbers</h5>
+                                <p>{orderSchedule.join(", ")}</p> {/* Display the order schedule numbers */}
+
                                 {/* Cost Matrix */}
                                 <Table striped bordered hover size="sm" style={smallTableStyle}>
                                     <thead>
                                         <tr>
-                                        <th style={{ ...smallCellStyle, width: '20%' }}>Last week with Production</th>
+                                            <th style={smallCellStyle}>Last week with Production</th>
                                             {Array.from({ length: costMatrix[0].length }, (_, index) => (
                                                 <th key={index} style={smallCellStyle}>T={index + 1}</th> // Planning Horizon t
                                             ))}

@@ -20,6 +20,7 @@ import { useLocation, NavLink } from "react-router-dom";
 
 import { Nav } from "react-bootstrap";
 
+import logo from "assets/img/reactlogo.png";
 
 function Sidebar({ color, image, routes }) {
   const location = useLocation();
@@ -37,8 +38,7 @@ function Sidebar({ color, image, routes }) {
       />
       <div className="sidebar-wrapper" align="center">
         
-      <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.23)' }}>
- 
+            <div >
               <img 
                 src={require("assets/img/IBK.png")} 
                 alt="Universität Innsbruck Logo" 

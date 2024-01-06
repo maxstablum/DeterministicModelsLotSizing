@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import BasicCalculation from './components/basicCalculation';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/sidebar';
 import Header from './components/header';
 
 function App() {

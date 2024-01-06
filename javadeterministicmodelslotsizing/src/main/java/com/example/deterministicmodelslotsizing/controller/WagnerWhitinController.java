@@ -35,8 +35,7 @@ public class WagnerWhitinController {
             WagnerWhitinResponse response = new WagnerWhitinResponse(
                     algorithm.getTotalCost(),
                     algorithm.getOrderSchedule(),
-                    algorithm.getCostMatrix(),
-                    algorithm.getProductionPeriods()
+                    algorithm.getCostMatrix()
             );
             // Return the response
             log.info("Calculation successful for request: {}", response);

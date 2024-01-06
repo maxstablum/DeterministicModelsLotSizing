@@ -132,9 +132,7 @@ function Homepage() {
                 <Card.Title as="h4">Users Behavior</Card.Title>
                 <p className="card-category">24 Hours performance</p>
               </Card.Header>
-              <Card.Body>
-                
-              </Card.Body>
+              <Card.Body></Card.Body>
               <Card.Footer>
                 <div className="legend">
                   <i className="fas fa-circle text-info"></i>
@@ -157,7 +155,6 @@ function Homepage() {
                 <p className="card-category">Last Campaign Performance</p>
               </Card.Header>
               <Card.Body>
-               
                 <div className="legend">
                   <i className="fas fa-circle text-info"></i>
                   Open <i className="fas fa-circle text-danger"></i>
@@ -180,9 +177,7 @@ function Homepage() {
                 <Card.Title as="h4">2017 Sales</Card.Title>
                 <p className="card-category">All products including Taxes</p>
               </Card.Header>
-              <Card.Body>
-               
-              </Card.Body>
+              <Card.Body></Card.Body>
               <Card.Footer>
                 <div className="legend">
                   <i className="fas fa-circle text-info"></i>

@@ -6,20 +6,19 @@ import java.util.Arrays;
  * @Author Tamino Gaub & Maximilian Stablum
  */
 @SuppressWarnings("unused")
+
 public class WagnerWhitinResponse {
 
     // Attributes
     private int[] totalCost;
     private int[] orderSchedule;
     private int[][] costMatrix;
-    private int[] productionPeriods;
 
     // Constructor
-    public WagnerWhitinResponse(int[] totalCost, int[] orderSchedule, int[][] costMatrix, int[] productionPeriods) {
+    public WagnerWhitinResponse(int[] totalCost, int[] orderSchedule, int[][] costMatrix) {
         this.totalCost = totalCost;
         this.orderSchedule = orderSchedule;
         this.costMatrix = costMatrix;
-        this.productionPeriods = productionPeriods;
     }
 
     // Getters (Necessary for application/json)
@@ -57,6 +56,7 @@ public class WagnerWhitinResponse {
     }
 
     // toString method
+
     @Override
     public String toString() {
         String totalCostStr = Arrays.toString(totalCost);
