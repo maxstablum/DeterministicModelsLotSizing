@@ -19,10 +19,6 @@ import Homepage from "views/Homepage.js";
 import EOQ from "views/EOQ.js";
 import Team from "views/Team.js";
 import WagnerWhitin from "views/WagnerWhitin.js";
-import Proposal from "views/Proposal.js";
-import Icons from "views/Icons.js";
-import Maps from "views/Maps.js";
-import Notifications from "views/Notifications.js";
 
 const dashboardRoutes = [
   {
@@ -34,16 +30,9 @@ const dashboardRoutes = [
   },
   {
     path: "/eoq",
-    name: "eoq",
+    name: "EOQ",
     icon: "nc-icon nc-app",
     component: EOQ,
-    layout: "/admin",
-  },
-  {
-    path: "/team",
-    name: "Team Members",
-    icon: "nc-icon nc-circle-09",
-    component: Team,
     layout: "/admin",
   },
   {
@@ -54,31 +43,10 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/proposal",
-    name: "Proposal",
-    icon: "nc-icon nc-paper-2",
-    component: Proposal,
-    layout: "/admin",
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "nc-icon nc-atom",
-    component: Icons,
-    layout: "/admin",
-  },
-  /*{
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/admin"
-  },*/
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
-    component: Notifications,
+    path: "/team",
+    name: "Team Members",
+    icon: "nc-icon nc-circle-09",
+    component: Team,
     layout: "/admin",
   },
 ];
