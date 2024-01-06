@@ -28,6 +28,11 @@ class WagnerWhitin extends Component {
         }));
     };
 
+    removePeriod = (id) => {
+        const newPeriods = this.state.periods.filter(period => period.id !== id);
+        this.setState({ periods: newPeriods });
+      };
+
     handlePeriodChange = (id, value) => {
         const newPeriods = this.state.periods.map(period =>
             period.id === id ? { ...period, value: value } : period
@@ -53,26 +58,27 @@ class WagnerWhitin extends Component {
     renderPeriodInputs = () => {
         let inputs = [];
         for (let i = 0; i < this.state.periods.length; i += 10) {
-            inputs.push(
-                <Row key={i}>
-                    {this.state.periods.slice(i, i + 10).map(period => (
-                        <Col md={1} key={period.id}>
-                            <Form.Group>
-                                <Form.Label>{`P${period.id + 1}`}</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    value={period.value}
-                                    onChange={e => this.handlePeriodChange(period.id, e.target.value)}
-                                    size="sm"
-                                />
-                            </Form.Group>
-                        </Col>
-                    ))}
-                </Row>
-            );
+          inputs.push(
+            <Row key={i}>
+              {this.state.periods.slice(i, i + 10).map(period => (
+                <Col md={1} key={period.id}>
+                  <Form.Group>
+                    <Form.Label>{`P${period.id + 1}`}</Form.Label>
+                    <Form.Control
+                      type="number"
+                      value={period.value}
+                      onChange={e => this.handlePeriodChange(period.id, e.target.value)}
+                      size="sm"
+                    />
+                  </Form.Group>
+                </Col>
+              ))}
+            </Row>
+          );
         }
+        
         return inputs;
-    };
+      };
 
     render() {
       return (
@@ -119,6 +125,14 @@ class WagnerWhitin extends Component {
                                       </Row>
                                       <Row>
                                           <Col md="12">
+                                            <Button variant="danger" onClick={() => this.removePeriod(this.state.periods.length - 1)}>
+                                                Remove Period
+                                            </Button>
+                                          </Col>
+                                      </Row>
+                                      
+                                      <Row>
+                                          <Col md="12">
                                               <Button variant="primary" onClick={this.calculate}>
                                                   Calculate
                                               </Button>
@@ -136,6 +150,7 @@ class WagnerWhitin extends Component {
                       totalCost={this.state.results.totalCost}
                       orderSchedule={this.state.results.orderSchedule}
                       costMatrix={this.state.results.costMatrix}
+                      productionPeriods={this.state.results.productionPeriods}
                   />
               )}
           </>

@@ -22,7 +22,7 @@ To set up the project locally, follow these steps:
 1. **Initialize React project**:
   Into the directory: frontend/light-bootstrap-dashboard-react-master
    ```bash
-   npm install
+   npm install --legacy-peer-deps
    npm install axios --legacy-peer-deps
    npm start
    

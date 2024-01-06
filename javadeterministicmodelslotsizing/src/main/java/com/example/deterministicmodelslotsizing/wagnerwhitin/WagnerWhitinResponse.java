@@ -2,16 +2,19 @@ package com.example.deterministicmodelslotsizing.wagnerwhitin;
 
 import java.util.Arrays;
 
+@SuppressWarnings("unused")
 public class WagnerWhitinResponse {
     private int[] totalCost;
     private int[] orderSchedule;
     private int[][] costMatrix;
+    private int[] productionPeriods;
 
     // Constructor
-    public WagnerWhitinResponse(int[] totalCost, int[] orderSchedule, int[][] costMatrix) {
+    public WagnerWhitinResponse(int[] totalCost, int[] orderSchedule, int[][] costMatrix, int[] productionPeriods) {
         this.totalCost = totalCost;
         this.orderSchedule = orderSchedule;
         this.costMatrix = costMatrix;
+        this.productionPeriods = productionPeriods;
     }
 
     // Getters (Necessary for application/json)
@@ -38,6 +41,14 @@ public class WagnerWhitinResponse {
 
     public void setCostMatrix(int[][] costMatrix) {
         this.costMatrix = costMatrix;
+    }
+
+    public int[] getProductionPeriods() {
+        return productionPeriods;
+    }
+
+    public void setProductionPeriods(int[] productionPeriods) {
+        this.productionPeriods = productionPeriods;
     }
 
     @Override
