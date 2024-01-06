@@ -1,6 +1,11 @@
 package com.example.deterministicmodelslotsizing.wagnerwhitin;
-
+/**
+ * Class to handle request for the communication between the frontend and the backend
+ * @Author Tamino Gaub & Maximilian Stablum
+ */
 public class WagnerWhitinRequest {
+
+    // Attributes
     private int[] demands;
     private int holdingCostPerUnitPerPeriod;
     private int orderCost;

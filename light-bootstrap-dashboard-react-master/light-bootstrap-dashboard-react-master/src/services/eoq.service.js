@@ -1,11 +1,13 @@
 import http from "../http-common";
 import axios from "axios";
 
+// Service to send the parameters to the backend
 class EOQDataService {
   /*create(data) {
     return axios.post("http://localhost:8080/eoq/calculation", data);
   }*/
 
+  // Function to calculate the EOQ with the given parameters
   create(data) {
     return http.post("eoq/calculation", data);
   }
@@ -14,6 +16,7 @@ class EOQDataService {
     return http.post("/photo/pictureUpload", data);
   }*/
 
+  // Function to get all the EOQs
   getAll() {
     return http.get("/eoqGetAll");
   }

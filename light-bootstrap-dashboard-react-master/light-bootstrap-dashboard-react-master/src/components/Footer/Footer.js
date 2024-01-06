@@ -25,11 +25,13 @@ class Footer extends Component {
         <Container fluid>
           <nav>
             <ul className="footer-menu">
+              {/* Github Link for repository*/}
               <li>
                 <a href="#pablo" onClick={(e) => e.preventDefault()}>
                   Home
                 </a>
               </li>
+              {/* Contact Us Link*/}
               <li>
                 <a href="#pablo" onClick={(e) => e.preventDefault()}>
                   Company

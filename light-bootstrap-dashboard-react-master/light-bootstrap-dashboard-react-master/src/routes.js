@@ -19,6 +19,9 @@ import Homepage from "views/Homepage.js";
 import EOQ from "views/EOQ.js";
 import Team from "views/Team.js";
 import WagnerWhitin from "views/WagnerWhitin.js";
+
+// routes for the different pages
+=======
 import Proposal from "views/Proposal.js";
 
 const dashboardRoutes = [
