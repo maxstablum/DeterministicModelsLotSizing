@@ -7,9 +7,9 @@
     "bootstrap": "4.6.0",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.9",
-    "react": "^18.2.0",
+    "react": ">=16.8.0",
     "react-bootstrap": "2.4.0",
-    "react-dom": "^18.2.0",
+    "react-dom": ">=16.8.0",
     "react-notification-alert": "0.0.13",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
@@ -30,6 +30,10 @@
     "compile:scss": "sass src/assets/scss/light-bootstrap-dashboard-pro-react.scss src/assets/css/light-bootstrap-dashboard-pro-react.css",
     "minify:scss": "sass src/assets/scss/light-bootstrap-dashboard-pro-react.scss src/assets/css/light-bootstrap-dashboard-pro-react.min.css --style compressed",
     "build:scss": "npm run compile:scss && npm run minify:scss"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "browserslist": {
     "production": [

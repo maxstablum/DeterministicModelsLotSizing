@@ -1,7 +1,5 @@
 package com.example.deterministicmodelslotsizing.wagnerwhitin;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Class to calculate thr Wagner-Whitin algorithm
@@ -9,6 +7,7 @@ import java.util.List;
  */
 public class WagnerWhitinAlgorithm {
 
+    // Attributes
     private int[] demands;
     private int holdingCostPerUnitPerPeriod;
     private int orderCost;
@@ -17,7 +16,7 @@ public class WagnerWhitinAlgorithm {
     private int[][] costMatrix;
     private int[] productionPeriods;
 
-
+    // Constructor
     public WagnerWhitinAlgorithm(int[] demands, int holdingCostPerUnitPerPeriod, int orderCost) {
         this.holdingCostPerUnitPerPeriod = holdingCostPerUnitPerPeriod;
         this.orderCost = orderCost;
@@ -25,7 +24,10 @@ public class WagnerWhitinAlgorithm {
         this.totalCost = new int[demands.length];
         this.orderSchedule = new int[demands.length];
         this.costMatrix = new int[demands.length][demands.length];
+        this.productionPeriods = new int[demands.length+1];
     }
+
+    // Method to calculate the Wagner-Whitin algorithm
     public void calculate() {
         // Set every value in totalCost array to the largest number an integer can have.
         // This is done to later identify the minimum costs effectively.
@@ -36,7 +38,6 @@ public class WagnerWhitinAlgorithm {
 
         // Fill the first row of the cost matrix with the cost of starting production in the first week
         // and carrying inventory for all following weeks.
-
         for (int j = 0; j < demands.length; j++) {
             // If it's the very first cell, it's just the order cost. Otherwise, it's the cost of the previous cell
             // plus the holding cost for the current demand.
@@ -46,11 +47,10 @@ public class WagnerWhitinAlgorithm {
             // Set the production start week to 0 as we're considering production starts in the first week.
             orderSchedule[j] = 0;
         }
-        for (int z = 0;z< demands.length;z++){
-
-        }
 
         // Check each period, starting from week 1 onwards, to see if it's cheaper to start production there.
+        // startweek = Week considered to start production
+        // endweek = End of the planning horizon for one production schedule
         for (int startWeek = 1; startWeek < demands.length; startWeek++) {
             // For each starting week, we consider ending weeks up to the end of the demand array.
             for (int endWeek = startWeek; endWeek < demands.length; endWeek++) {
@@ -75,63 +75,40 @@ public class WagnerWhitinAlgorithm {
 
         // Print the cost matrix and the order schedule.
         printCostMatrix();
+
+        // Print the production periods
+        int lastOrderIndex = -1;
+        int sum = 0;
+        System.out.println("Order Quantities per Period:");
+        // Go through each week in the order schedule.
+        for (int i = 0; i < orderSchedule.length; i++) {
+            // If it's the first week or the order schedule value is different from the previous one
+            if (i == 0 || orderSchedule[i] != orderSchedule[lastOrderIndex]) {
+                // Print the order quantity for the previous order if it exists.
+                if (lastOrderIndex != -1) {
+                    System.out.println("Order in period " + (orderSchedule[lastOrderIndex] + 1) + ": " + sum + " units");
+                    productionPeriods[i] = sum;
+                }
+                // Update the last order index and the sum of the order quantity.
+                lastOrderIndex = i;
+                sum = demands[i];
+            } else {
+                sum += demands[i];
+            }
+        }
+        // Printing the last order if it exists
+        if (lastOrderIndex != -1) {
+            System.out.println("Order in period " + (orderSchedule[lastOrderIndex] + 1) + ": " + sum + " units");
+            int lastOrderIndex1 = lastOrderIndex+1;
+            productionPeriods[lastOrderIndex1] = sum;
+        }
+        System.out.println(Arrays.toString(productionPeriods));
+
+        // Console Split to EOQ
+        System.out.println("------------------------------------------");
     }
 
-    /**public void calculate() {
-        Arrays.fill(totalCost, Integer.MAX_VALUE);
-        Arrays.fill(orderSchedule, -1);
-
-        for (int j = 0; j < demands.length; j++) {
-            costMatrix[0][j] = (j == 0 ? orderCost : costMatrix[0][j - 1]) + demands[j] * holdingCostPerUnitPerPeriod * j;
-            totalCost[j] = costMatrix[0][j];
-            orderSchedule[j] = 0;
-        }
-
-        for (int startWeek = 1; startWeek < demands.length; startWeek++) {
-            for (int endWeek = startWeek; endWeek < demands.length; endWeek++) {
-                int holdingCost = 0;
-                for (int week = startWeek; week <= endWeek; week++) {
-                    holdingCost += demands[week] * holdingCostPerUnitPerPeriod * (week - startWeek);
-                }
-                int costForThisOrder = orderCost + holdingCost;
-                costMatrix[startWeek][endWeek] = costForThisOrder + (startWeek > 0 ? totalCost[startWeek - 1] : 0);
-
-                if (totalCost[endWeek] > costMatrix[startWeek][endWeek]) {
-                    totalCost[endWeek] = costMatrix[startWeek][endWeek];
-                    orderSchedule[endWeek] = startWeek;
-                }
-            }
-        }
-
-        // Post-calculation adjustment of the cost matrix
-        for (int currentPeriod = 1; currentPeriod < demands.length; currentPeriod++) {
-            // Check if production occurs in the current period and it's not the first one
-            System.out.println("Currently checking: " + currentPeriod);
-            if (orderSchedule[currentPeriod] == currentPeriod) {
-                // Set costs to zero for all following periods until the next production period
-                int nextProductionPeriod = currentPeriod + 1;
-                System.out.println("Checking: " + orderSchedule[currentPeriod]);
-                while (nextProductionPeriod < demands.length && orderSchedule[nextProductionPeriod] != nextProductionPeriod) {
-                    nextProductionPeriod++;
-                }
-
-                for (int j = currentPeriod + 1; j < nextProductionPeriod; j++) {
-                    for (int i = 0; i < currentPeriod; i++) {
-                        costMatrix[i][j] = 0;
-                        System.out.println("Savas: " + costMatrix[i][j]);
-
-                    }
-                }
-            }
-        }
-
-        // Print the cost matrix and the order schedule.
-        printCostMatrix();
-    }*/
-
-
-
-
+    // Method to print the cost matrix and the order schedule.
     private void printCostMatrix() {
         // Print an empty space to align the header of the table.
         System.out.printf("%-16s", "          ");
@@ -181,5 +158,9 @@ public class WagnerWhitinAlgorithm {
 
     public int[][] getCostMatrix() {
         return costMatrix;
+    }
+
+    public int[] getProductionPeriods(){
+        return productionPeriods;
     }
 }

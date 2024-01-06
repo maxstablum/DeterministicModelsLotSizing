@@ -20,7 +20,6 @@ import { useLocation, NavLink } from "react-router-dom";
 
 import { Nav } from "react-bootstrap";
 
-import logo from "assets/img/reactlogo.png";
 
 function Sidebar({ color, image, routes }) {
   const location = useLocation();
@@ -29,6 +28,7 @@ function Sidebar({ color, image, routes }) {
   };
   return (
     <div className="sidebar" data-image={image} data-color={color}>
+      {/*Set the background image to Axamer Lizum*/ }
       <div
         className="sidebar-background"
         style={{
@@ -37,7 +37,8 @@ function Sidebar({ color, image, routes }) {
       />
       <div className="sidebar-wrapper" align="center">
         
-            <div >
+      <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.23)' }}>
+ 
               <img 
                 src={require("assets/img/IBK.png")} 
                 alt="Universität Innsbruck Logo" 
@@ -45,6 +46,7 @@ function Sidebar({ color, image, routes }) {
               />
         </div>
         <Nav>
+          {/*routes for the different pages in frontend*/}
           {routes.map((prop, key) => {
             if (!prop.redirect)
               return (

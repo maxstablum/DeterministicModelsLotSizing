@@ -2,18 +2,19 @@ import React, { Component } from "react";
 import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
 import eoqService from "../services/eoq.service";
 
+// EOQ component
 export default class EOQ extends Component {
+  // Constructor
   constructor(props) {
     super(props);
     this.onChangeDemand = this.onChangeDemand.bind(this);
     this.onChangeWeeksPerYear = this.onChangeWeeksPerYear.bind(this);
     this.onChangeASetup = this.onChangeASetup.bind(this);
     this.onChangeH = this.onChangeH.bind(this);
-
     this.calculate = this.calculate.bind(this);
 
     //Old method: this.upload = this.upload.bind(this);
-
+    // Set the state
     this.state = {
       weeklyDemand: 19,
       weeksPerYear: 52,
@@ -50,6 +51,7 @@ export default class EOQ extends Component {
     });
   }
 
+  // Function to send the parameters to the backend with using the eoqService
   calculate = () => {
     // Send data to the service and handle the response
     eoqService
@@ -78,7 +80,7 @@ export default class EOQ extends Component {
                 <Card.Body>
                   <Form>
                     <Row>
-                      {/* Ordering Cost and Holding Cost side by side */}
+                      {/* Ordering Cost and Weeks per Year side by side */}
                       <Col md="6">
                         <Form.Group>
                           <Form.Label>Ordering Cost</Form.Label>
@@ -101,7 +103,7 @@ export default class EOQ extends Component {
                       </Col>
                     </Row>
                     <Row>
-                      {/* Ordering Cost and Holding Cost side by side */}
+                      {/* Setup Cost and Holding Cost side by side */}
                       <Col md="6">
                         <Form.Group>
                           <Form.Label>Setup Costs</Form.Label>
@@ -125,6 +127,7 @@ export default class EOQ extends Component {
                     </Row>
                     <Row>
                       <Col md="12">
+                        {/* Calculate Button */}
                         <Button variant="primary" onClick={this.calculate}>
                           Calculate
                         </Button>
