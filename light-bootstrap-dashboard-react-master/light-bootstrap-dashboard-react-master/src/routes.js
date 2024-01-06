@@ -19,7 +19,7 @@ import Homepage from "views/Homepage.js";
 import EOQ from "views/EOQ.js";
 import Team from "views/Team.js";
 import WagnerWhitin from "views/WagnerWhitin.js";
-import Typography from "views/Typography.js";
+import Proposal from "views/Proposal.js";
 import Icons from "views/Icons.js";
 import Maps from "views/Maps.js";
 import Notifications from "views/Notifications.js";
@@ -54,10 +54,10 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/typography",
-    name: "Typography",
+    path: "/proposal",
+    name: "Proposal",
     icon: "nc-icon nc-paper-2",
-    component: Typography,
+    component: Proposal,
     layout: "/admin",
   },
   {
