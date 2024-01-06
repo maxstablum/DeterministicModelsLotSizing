@@ -8,11 +8,7 @@ class WagnerWhitinService {
     
     calculateWagnerWhitin(demands, holdingCostPerUnitPerPeriod, orderCost) {
         console.log("WagnerWhitinService.calculateWagnerWhitin() called");
-        console.log({
-            demands: demands,
-            holdingCostPerUnitPerPeriod: holdingCostPerUnitPerPeriod,
-            orderCost: orderCost
-        })
+        
         // Send the parameters to the backend
         return http.post(API_URL, {
             demands: demands,

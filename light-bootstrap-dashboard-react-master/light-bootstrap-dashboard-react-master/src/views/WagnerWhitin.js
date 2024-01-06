@@ -50,6 +50,14 @@ class WagnerWhitin extends Component {
         const periodValues = this.state.periods.map(period => parseInt(period.value, 10) || 0);
         const orderCostInt = parseInt(this.state.orderingCost, 10) || 0;
         const holdingCostInt = parseInt(this.state.holdingCost, 10) || 0;
+        const isDataIncomplete = this.state.periods.some(period => period.value === '') || 
+        this.state.holdingCost === '' || this.state.orderingCost === '';
+
+        if (isDataIncomplete) {
+            // Alert the user if data is incomplete
+            alert('Please enter values for all periods.');
+            return;
+        }
 
         WagnerWhitinService.calculateWagnerWhitin(periodValues, holdingCostInt, orderCostInt)
             .then(response => {
