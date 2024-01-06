@@ -25,11 +25,13 @@ class Footer extends Component {
         <Container fluid>
           <nav>
             <ul className="footer-menu">
+              {/* Github Link for repository*/}
               <li>
                 <a href="https://github.com/maxstablum/DeterministicModelsLotSizing">
                   Github
                 </a>
               </li>
+              {/* Contact Us Link*/}
               <li>
               <a href="mailto:maximilian.stablum@student.uibk.ac.at,tamino.gaub@student.uibk.ac.at">
                   Contact Us

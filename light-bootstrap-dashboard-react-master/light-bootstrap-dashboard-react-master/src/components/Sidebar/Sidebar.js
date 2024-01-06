@@ -28,6 +28,7 @@ function Sidebar({ color, image, routes }) {
   };
   return (
     <div className="sidebar" data-image={image} data-color={color}>
+      {/*Set the background image to Axamer Lizum*/ }
       <div
         className="sidebar-background"
         style={{
@@ -45,6 +46,7 @@ function Sidebar({ color, image, routes }) {
               />
         </div>
         <Nav>
+          {/*routes for the different pages in frontend*/}
           {routes.map((prop, key) => {
             if (!prop.redirect)
               return (

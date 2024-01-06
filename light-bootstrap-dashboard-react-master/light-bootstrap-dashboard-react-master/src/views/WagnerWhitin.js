@@ -3,14 +3,17 @@ import { Button, Card, Container, Row, Col, Form } from 'react-bootstrap';
 import WagnerWhitinService from '../services/wagner_whitin.service'; // Import the service
 import WagnerWhitinResults from './WagnerWhitinResults'; // Import the results component
 
+// WagnerWhitin component
 class WagnerWhitin extends Component {
+    // Constructor
   constructor(props) {
     super(props);
     const usePresetDemands = true; // Value to change for testing cases
 
-    // Preset demand values
+    // Preset demand values for testing purposes
     const presetDemands = [20, 50, 10, 50, 50, 10, 20, 40, 20, 30];
 
+    // Set the state 
     this.state = {
         periods: Array.from({ length: 10 }, (_, index) => ({
             id: index,
@@ -21,18 +24,20 @@ class WagnerWhitin extends Component {
         results: null
     };
 }
-
+    // Function to add a period to the view
     addPeriod = () => {
         this.setState(prevState => ({
             periods: [...prevState.periods, { id: prevState.periods.length, value: '' }]
         }));
     };
 
+    // Function to remove a period from the view
     removePeriod = (id) => {
         const newPeriods = this.state.periods.filter(period => period.id !== id);
         this.setState({ periods: newPeriods });
       };
 
+    // Function to handle the change of a period
     handlePeriodChange = (id, value) => {
         const newPeriods = this.state.periods.map(period =>
             period.id === id ? { ...period, value: value } : period
@@ -40,6 +45,7 @@ class WagnerWhitin extends Component {
         this.setState({ periods: newPeriods });
     };
 
+    //Function to send the parameters to the backend with using the WagnerWhitinService
     calculate = () => {
         const periodValues = this.state.periods.map(period => parseInt(period.value, 10) || 0);
         const orderCostInt = parseInt(this.state.orderingCost, 10) || 0;
@@ -51,10 +57,11 @@ class WagnerWhitin extends Component {
                 console.log("Calculation successful", response.data);
             })
             .catch(error => {
-                console.error("There was an error!", error);
+                console.error("Calculation failed!", error);
             });
     };
 
+    // Function to render the period inputs
     renderPeriodInputs = () => {
         let inputs = [];
         for (let i = 0; i < this.state.periods.length; i += 10) {
@@ -115,7 +122,9 @@ class WagnerWhitin extends Component {
                                               </Form.Group>
                                           </Col>
                                       </Row>
+                                      {/* Period Inputs */}
                                       {this.renderPeriodInputs()}
+                                      {/* Add Period Button */}
                                       <Row>
                                           <Col md="12">
                                               <Button variant="primary" onClick={this.addPeriod}>
@@ -123,6 +132,7 @@ class WagnerWhitin extends Component {
                                               </Button>
                                           </Col>
                                       </Row>
+                                      {/* Remove Period Button */}
                                       <Row>
                                           <Col md="12">
                                             <Button variant="danger" onClick={() => this.removePeriod(this.state.periods.length - 1)}>
@@ -130,7 +140,7 @@ class WagnerWhitin extends Component {
                                             </Button>
                                           </Col>
                                       </Row>
-                                      
+                                        {/* Calculate Button */}
                                       <Row>
                                           <Col md="12">
                                               <Button variant="primary" onClick={this.calculate}>
@@ -144,7 +154,7 @@ class WagnerWhitin extends Component {
                       </Col>
                   </Row>
               </Container>
-              {/* Conditional Rendering of Results */}
+              {/* Conditional Rendering of Results and using the WagnerWhitinResults component*/}
               {this.state.results && (
                   <WagnerWhitinResults
                       totalCost={this.state.results.totalCost}

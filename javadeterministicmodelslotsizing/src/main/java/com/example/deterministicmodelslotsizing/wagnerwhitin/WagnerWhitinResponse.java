@@ -1,9 +1,14 @@
 package com.example.deterministicmodelslotsizing.wagnerwhitin;
 
 import java.util.Arrays;
-
+/**
+ * Class to handle response for the communication between the frontend and the backend
+ * @Author Tamino Gaub & Maximilian Stablum
+ */
 @SuppressWarnings("unused")
 public class WagnerWhitinResponse {
+
+    // Attributes
     private int[] totalCost;
     private int[] orderSchedule;
     private int[][] costMatrix;
@@ -51,6 +56,7 @@ public class WagnerWhitinResponse {
         this.productionPeriods = productionPeriods;
     }
 
+    // toString method
     @Override
     public String toString() {
         String totalCostStr = Arrays.toString(totalCost);

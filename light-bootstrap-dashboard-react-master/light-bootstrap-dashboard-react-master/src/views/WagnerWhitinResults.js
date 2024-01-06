@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import { Table, Card, Container, Row, Col } from 'react-bootstrap';
 
+// function to filter out the 0 values from the answer from the backend
 function filterArray(arr) {
     return arr.filter(value => value !== 0);
 }
 
+// function to remove duplicates from the order schedule, due to the fact that the backend returns the order schedule per period
 function removeDuplicates(arr) {
     return [...new Set(arr)];
   }
   
-
+// WagnerWhitinResults component
 class WagnerWhitinResults extends Component {
    
     render() {
+        // Destructure the props
         const { totalCost, orderSchedule, costMatrix, productionPeriods } = this.props;
         const lastTotalCost = totalCost[totalCost.length - 1]; // Get the last total cost
         const filteredArray = filterArray(productionPeriods);
@@ -40,9 +43,9 @@ class WagnerWhitinResults extends Component {
                             </Card.Header>
                             <Card.Body>
                                 {/* Total Cost */}
-                                <h5>The optimum of the total costs are: {lastTotalCost} € AND::::{filteredArray}</h5>
+                                <h5>The optimum of the total costs are: {lastTotalCost} €</h5>
                                 {/* Order Schedule and Filtered Array */}
-                                {/* Order Schedule Numbers */}
+                                {/* Order Schedule Numbers 
                                 <h5>The optimal order frequency is: {
                                     [...new Set(orderSchedule.map(number => number + 1))]
                                     .join(", ")
@@ -51,7 +54,8 @@ class WagnerWhitinResults extends Component {
                                  <h5>The optimal order amount is: {
                                     [...new Set(productionPeriods.map(number => number))]
                                     .join(", ")
-                                }</h5> 
+                                }</h5> */}
+                                {/* Order Schedule and optimal amount of production */}
                                 <Table size="sm" style={{ ...smallTableStyle, border: '1px solid grey' }}>
                                     <thead>
                                         <tr>
@@ -69,10 +73,7 @@ class WagnerWhitinResults extends Component {
                                             ))}
                                         </tr>
                                     </tbody>
-                                </Table>
-    
-
-                             
+                                </Table>                             
                                 {/* Cost Matrix */}
                                 <Table striped bordered hover size="sm" style={smallTableStyle}>
                                     <thead>
@@ -103,7 +104,7 @@ class WagnerWhitinResults extends Component {
                                         <tr>
                                             <td style={smallCellStyle}>J*_t</td>
                                             {orderSchedule.map((period, index) => (
-                                                <td key={index} style={smallCellStyle}>{period + 1}</td> // Incremented Order schedule values
+                                                <td key={index} style={smallCellStyle}>{period + 1}</td>
                                             ))}
                                         </tr>
                                     </tbody>
