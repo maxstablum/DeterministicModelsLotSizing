@@ -156,7 +156,6 @@ function User() {
               <div className="card-image">
                 <img
                   alt="..."
-                  src={require("assets/img/photo-1431578500526-4d9613015464.jpeg")}
                 ></img>
               </div>
               <Card.Body>

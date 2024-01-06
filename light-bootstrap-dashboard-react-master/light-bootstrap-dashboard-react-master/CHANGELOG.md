@@ -187,7 +187,6 @@ const localizer = momentLocalizer(moment);
 - node-sass 4.6.1 → 4.12.0
 - react 16.2.0 → 16.8.6
 - react-bootstrap 0.32.1 → 0.32.4
-- react-chartist 0.13.1 → 0.13.3
 - react-dom 16.2.0 → 16.8.6
 - react-router-dom 4.2.2 → 5.0.0
 - react-scripts 1.1.1 → 3.0.0
@@ -220,7 +219,6 @@ const localizer = momentLocalizer(moment);
 - `npm-run-all@4.1.1` to `npm-run-all@4.1.2`
 - `react@15.6.1` to `react@16.2.0`
 - `react-bootstrap@0.31.1` to `react-bootstrap@0.32.1`
-- `react-chartist@0.13.0` to `react-chartist@0.13.1`
 - `react-dom@15.6.1` to `react-dom@16.2.0`
 - `react-notification-system@0.2.15` to `react-notification-system@0.2.17`
 - `react-router-dom@4.1.2` to `react-router-dom@4.2.2`
