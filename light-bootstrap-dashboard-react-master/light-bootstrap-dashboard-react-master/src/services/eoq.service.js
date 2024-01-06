@@ -1,6 +1,19 @@
 import http from "../http-common";
+import axios from "axios";
 
 class EOQDataService {
+  /*create(data) {
+    return axios.post("http://localhost:8080/eoq/calculation", data);
+  }*/
+
+  create(data) {
+    return http.post("eoq/calculation", data);
+  }
+
+  /*upload(data) {
+    return http.post("/photo/pictureUpload", data);
+  }*/
+
   getAll() {
     return http.get("/eoqGetAll");
   }
@@ -10,9 +23,9 @@ class EOQDataService {
     }
     */
 
-  create(data) {
+  /*create(data) {
     return http.post("/eoqPost", data);
-  }
+  }*/
 
   /*update(id, data) {
         return http.put(`/eoq/${id}`, data);
