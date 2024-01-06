@@ -37,7 +37,8 @@ function Sidebar({ color, image, routes }) {
       />
       <div className="sidebar-wrapper" align="center">
         
-            <div >
+      <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.23)' }}>
+ 
               <img 
                 src={require("assets/img/IBK.png")} 
                 alt="Universität Innsbruck Logo" 
