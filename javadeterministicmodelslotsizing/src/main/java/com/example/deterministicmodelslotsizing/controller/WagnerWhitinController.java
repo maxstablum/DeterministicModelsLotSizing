@@ -29,7 +29,8 @@ public class WagnerWhitinController {
             WagnerWhitinResponse response = new WagnerWhitinResponse(
                     algorithm.getTotalCost(),
                     algorithm.getOrderSchedule(),
-                    algorithm.getCostMatrix()
+                    algorithm.getCostMatrix(),
+                    algorithm.getProductionPeriods()
             );
             log.info("Calculation successful for request: {}", response);
             ResponseEntity responseEntity = new ResponseEntity<>(response, HttpStatus.CREATED);

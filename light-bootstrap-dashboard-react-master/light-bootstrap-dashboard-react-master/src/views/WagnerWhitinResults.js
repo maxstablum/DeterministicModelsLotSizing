@@ -1,13 +1,25 @@
-// WagnerWhitinResults.js
-
 import React, { Component } from 'react';
 import { Table, Card, Container, Row, Col } from 'react-bootstrap';
 
-class WagnerWhitinResults extends Component {
-    render() {
-        const { totalCost, orderSchedule, costMatrix } = this.props;
-        const lastTotalCost = totalCost[totalCost.length - 1]; // Get the last total cost
+function filterArray(arr) {
+    return arr.filter(value => value !== 0);
+}
 
+function removeDuplicates(arr) {
+    return [...new Set(arr)];
+  }
+  
+
+class WagnerWhitinResults extends Component {
+   
+    render() {
+        const { totalCost, orderSchedule, costMatrix, productionPeriods } = this.props;
+        const lastTotalCost = totalCost[totalCost.length - 1]; // Get the last total cost
+        const filteredArray = filterArray(productionPeriods);
+        const orderScheduleArray = removeDuplicates(orderSchedule);
+
+        
+        
         // Inline styles
         const smallTableStyle = {
             fontSize: "0.8rem", // Smaller font size
@@ -28,17 +40,44 @@ class WagnerWhitinResults extends Component {
                             </Card.Header>
                             <Card.Body>
                                 {/* Total Cost */}
-                                <h5>Total Cost</h5>
-                                <p>{lastTotalCost}</p>
-
+                                <h5>The optimum of the total costs are: {lastTotalCost} € AND::::{filteredArray}</h5>
+                                {/* Order Schedule and Filtered Array */}
                                 {/* Order Schedule Numbers */}
-                                <h5>Order Schedule Numbers</h5>
-                                <p>{orderSchedule.join(", ")}</p> {/* Display the order schedule numbers */}
+                                <h5>The optimal order frequency is: {
+                                    [...new Set(orderSchedule.map(number => number + 1))]
+                                    .join(", ")
+                                }</h5>  
+                                 
+                                 <h5>The optimal order amount is: {
+                                    [...new Set(productionPeriods.map(number => number))]
+                                    .join(", ")
+                                }</h5> 
+                                <Table size="sm" style={{ ...smallTableStyle, border: '1px solid grey' }}>
+                                    <thead>
+                                        <tr>
+                                            <th style={{ ...smallCellStyle, width: '20%' }}>Period of production</th>
+                                            {orderScheduleArray.map((number) => (
+                                                <th key={number} style={smallCellStyle}>{number + 1}</th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style={smallCellStyle}>Production quantity</td>
+                                            {filteredArray.map((quantity, index) => (
+                                                <td key={index} style={smallCellStyle}>{quantity}</td>
+                                            ))}
+                                        </tr>
+                                    </tbody>
+                                </Table>
+    
+
+                             
                                 {/* Cost Matrix */}
                                 <Table striped bordered hover size="sm" style={smallTableStyle}>
                                     <thead>
                                         <tr>
-                                            <th style={smallCellStyle}>Last week with Production</th>
+                                        <th style={{ ...smallCellStyle, width: '20%' }}>Last week with Production</th>
                                             {Array.from({ length: costMatrix[0].length }, (_, index) => (
                                                 <th key={index} style={smallCellStyle}>T={index + 1}</th> // Planning Horizon t
                                             ))}
