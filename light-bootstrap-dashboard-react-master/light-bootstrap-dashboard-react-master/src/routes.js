@@ -54,7 +54,7 @@ const dashboardRoutes = [
   {
     path: "/proposal",
     name: "Proposal",
-    icon: "nc-icon nc-circle-09",
+    icon: "nc-icon nc-paper-2",
     component: Proposal,
     layout: "/admin",
   },
