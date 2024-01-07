@@ -9,11 +9,13 @@ import org.springframework.http.ResponseEntity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * Class to handle the communication between the frontend and the backend for the Wagner Whitin algorithm
  * @author    Tamino Gaub & Maximilian Stablum
  */
+@EnableWebMvc
 @RestController
 public class WagnerWhitinController {
     // Logger for the class
