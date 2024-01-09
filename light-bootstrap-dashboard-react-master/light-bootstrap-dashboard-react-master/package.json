@@ -11,11 +11,15 @@
     "react-bootstrap": "2.4.0",
     "react-dom": ">=16.8.0",
     "react-notification-alert": "0.0.13",
+    "react-pdf": "^7.6.0",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "5.0.1",
     "reactstrap": "8.8.1",
     "sass": "1.53.0"
+  },
+  "overrides": {
+    "autoprefixer": "10.4.5"
   },
   "optionalDependencies": {
     "jquery": "3.5.1",

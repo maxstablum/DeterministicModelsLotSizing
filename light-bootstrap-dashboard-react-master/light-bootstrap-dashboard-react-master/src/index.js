@@ -20,6 +20,7 @@ import ReactDOM from "react-dom/client";
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
+// eslint-disable-next-line
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/animate.min.css";
 import "./assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0";

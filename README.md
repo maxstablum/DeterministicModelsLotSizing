@@ -24,15 +24,14 @@ To set up the project locally, follow these steps:
 
 1. **Initialize React project**:
    Into the directory: DeterministicModelsLotSizing/light-bootstrap-dashboard-react-master/light-bootstrap-dashboard-react-master
+
    ```bash
    npm install --legacy-peer-deps
-   npm install axios --legacy-peer-deps
-   npm install react-pdf --legacy-peer-deps
    npm start
 
    ```
 
 ## Contact Information
 
-Tamino Gaub - tamino.gaub@student.uibk.ac.at <br />
-Maximilian Stablum - maximilian.stablum@student.uibk.ac.at
+Tamino Gaub - <tamino.gaub@student.uibk.ac.at> <br />
+Maximilian Stablum - <maximilian.stablum@student.uibk.ac.at>

@@ -80,10 +80,10 @@ export default class EOQ extends Component {
                 <Card.Body>
                   <Form>
                     <Row>
-                      {/* Ordering Cost and Weeks per Year side by side */}
+                      {/* Weekly Demand and Weeks per Year side by side */}
                       <Col md="6">
                         <Form.Group>
-                          <Form.Label>Ordering Cost</Form.Label>
+                          <Form.Label>Weekly Demand</Form.Label>
                           <Form.Control
                             type="number"
                             value={this.state.weeklyDemand}
