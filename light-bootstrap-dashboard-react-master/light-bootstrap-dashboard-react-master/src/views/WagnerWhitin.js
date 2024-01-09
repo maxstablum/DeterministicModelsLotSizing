@@ -225,7 +225,7 @@ class WagnerWhitin extends Component {
                                                     type="file"
                                                     onChange={this.handleFileChange}
                                                     style={{ display: 'none' }}
-                                                />
+                                                /> 
                                             </div>
                                         </Col>
                                       </Row>
