@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
+import {React, Component } from 'react';
 import { Button, Card, Container, Row, Col, Form } from 'react-bootstrap';
 import WagnerWhitinService from '../services/wagner_whitin.service'; // Import the service
+//import { WagnerWhitinResults } from './WagnerWhitinResults';
 import WagnerWhitinResults from './WagnerWhitinResults'; // Import the results component
+import * as XLSX from 'xlsx';
+import Template from '../assets/xlsx/Import_Deterministic_Models.xlsx'; // Import the Excel file
+
 
 // WagnerWhitin component
 class WagnerWhitin extends Component {
@@ -21,7 +25,8 @@ class WagnerWhitin extends Component {
         })),
         orderingCost: '',
         holdingCost: '',
-        results: null
+        results: null,
+        file: null
     };
 }
     // Function to add a period to the view
@@ -95,6 +100,54 @@ class WagnerWhitin extends Component {
         return inputs;
       };
 
+      handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            this.setState({ file }, () => {
+                this.handleSubmit();
+            });
+        }
+    };
+    
+    handleSubmit = () => {
+        const { file } = this.state;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const data = e.target.result;
+            const workbook = XLSX.read(data, { type: 'binary' });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+            try {
+                this.processData(json);
+            } catch (error) {
+                alert('Fehler beim Verarbeiten der Datei: ' + error.message);
+            }
+        };
+        reader.readAsBinaryString(file);
+    };
+    
+    processData = (data) => {
+        console.log(data);
+        // Looking for the ordering cost and holding cost    
+        const holdingCost = data[2][1];
+        const orderingCost = data[3][1];
+    
+        // Looking for the demand values
+        const seventhRow = data[6];
+        const periods = seventhRow ? seventhRow.slice(1).map((value, index) => ({
+            id: index,
+            value: value ? value.toString() : ''
+        })) : [];
+    
+        // Update the state
+        this.setState({ 
+            periods, 
+            orderingCost,
+            holdingCost
+        });
+    };
+    
     render() {
       return (
           <>
@@ -102,12 +155,14 @@ class WagnerWhitin extends Component {
                   <Row>
                       <Col md="12">
                           <Card>
-                              <Card.Header>
-                                  <Card.Title as="h4">Wagner-Whitin Parameters</Card.Title>
-                              </Card.Header>
+                                <Card.Header>
+                                    <Card.Title as="h4">Wagner-Whitin Parameters</Card.Title>
+                                    
+                                </Card.Header>
                               <Card.Body>
                                   <Form>
-                                      <Row>
+                                      
+                                        <Row>   
                                           {/* Ordering Cost and Holding Cost side by side */}
                                           <Col md="6">
                                               <Form.Group>
@@ -147,6 +202,7 @@ class WagnerWhitin extends Component {
                                                 Remove Period
                                             </Button>
                                           </Col>
+                                          
                                       </Row>
                                         {/* Calculate Button */}
                                       <Row>
@@ -155,12 +211,30 @@ class WagnerWhitin extends Component {
                                                   Calculate
                                               </Button>
                                           </Col>
+                                          <Col md={{ span: 6, offset: 6 }}>
+                                            <div className="text-right">
+                                                <p>
+                                                    Insert data from the 
+                                                    <a href={Template} download="Import_Deterministic_Models.xlsx"> Template</a>
+                                                </p>
+                                                <label htmlFor="custom-file" className="btn btn-primary">
+                                                    Upload Excel File
+                                                </label>
+                                                <input
+                                                    id="custom-file"
+                                                    type="file"
+                                                    onChange={this.handleFileChange}
+                                                    style={{ display: 'none' }}
+                                                />
+                                            </div>
+                                        </Col>
                                       </Row>
+                                      
                                   </Form>
                               </Card.Body>
                           </Card>
                       </Col>
-                  </Row>
+                    </Row>
               </Container>
               {/* Conditional Rendering of Results and using the WagnerWhitinResults component*/}
               {this.state.results && (
