@@ -1,14 +1,25 @@
-import axios from "axios";
+import http from "../http-common";
 
-const API_URL = 'http://localhost:8080/wagner_whitin/calculation';
+// The URL of the backend for the WagnerWhitin calculation
+const API_URL = '/wagner_whitin/calculation';
 
+// Service to send the parameters to the backend
 class WagnerWhitinService {
     
     calculateWagnerWhitin(demands, holdingCostPerUnitPerPeriod, orderCost) {
-        return axios.post(API_URL, {
+        console.log("WagnerWhitinService.calculateWagnerWhitin() called");
+        
+        // Send the parameters to the backend
+        return http.post(API_URL, {
             demands: demands,
             holdingCostPerUnitPerPeriod: holdingCostPerUnitPerPeriod,
             orderCost: orderCost
+        }, {
+            // Set the headers to avoid misformatted data
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'  
+            }
         });
     }
 }

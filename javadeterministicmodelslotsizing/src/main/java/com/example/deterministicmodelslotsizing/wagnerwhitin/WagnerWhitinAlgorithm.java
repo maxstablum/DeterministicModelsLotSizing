@@ -7,13 +7,16 @@ import java.util.Arrays;
  */
 public class WagnerWhitinAlgorithm {
 
+    // Attributes
     private int[] demands;
     private int holdingCostPerUnitPerPeriod;
     private int orderCost;
     private int[] totalCost;
     private int[] orderSchedule;
     private int[][] costMatrix;
+    private int[] productionPeriods;
 
+    // Constructor
     public WagnerWhitinAlgorithm(int[] demands, int holdingCostPerUnitPerPeriod, int orderCost) {
         this.holdingCostPerUnitPerPeriod = holdingCostPerUnitPerPeriod;
         this.orderCost = orderCost;
@@ -21,8 +24,10 @@ public class WagnerWhitinAlgorithm {
         this.totalCost = new int[demands.length];
         this.orderSchedule = new int[demands.length];
         this.costMatrix = new int[demands.length][demands.length];
+        this.productionPeriods = new int[demands.length+1];
     }
 
+    // Method to calculate the Wagner-Whitin algorithm
     public void calculate() {
         // Set every value in totalCost array to the largest number an integer can have.
         // This is done to later identify the minimum costs effectively.
@@ -44,6 +49,8 @@ public class WagnerWhitinAlgorithm {
         }
 
         // Check each period, starting from week 1 onwards, to see if it's cheaper to start production there.
+        // startweek = Week considered to start production
+        // endweek = End of the planning horizon for one production schedule
         for (int startWeek = 1; startWeek < demands.length; startWeek++) {
             // For each starting week, we consider ending weeks up to the end of the demand array.
             for (int endWeek = startWeek; endWeek < demands.length; endWeek++) {
@@ -68,9 +75,40 @@ public class WagnerWhitinAlgorithm {
 
         // Print the cost matrix and the order schedule.
         printCostMatrix();
+
+        // Print the production periods
+        int lastOrderIndex = -1;
+        int sum = 0;
+        System.out.println("Order Quantities per Period:");
+        // Go through each week in the order schedule.
+        for (int i = 0; i < orderSchedule.length; i++) {
+            // If it's the first week or the order schedule value is different from the previous one
+            if (i == 0 || orderSchedule[i] != orderSchedule[lastOrderIndex]) {
+                // Print the order quantity for the previous order if it exists.
+                if (lastOrderIndex != -1) {
+                    System.out.println("Order in period " + (orderSchedule[lastOrderIndex] + 1) + ": " + sum + " units");
+                    productionPeriods[i] = sum;
+                }
+                // Update the last order index and the sum of the order quantity.
+                lastOrderIndex = i;
+                sum = demands[i];
+            } else {
+                sum += demands[i];
+            }
+        }
+        // Printing the last order if it exists
+        if (lastOrderIndex != -1) {
+            System.out.println("Order in period " + (orderSchedule[lastOrderIndex] + 1) + ": " + sum + " units");
+            int lastOrderIndex1 = lastOrderIndex+1;
+            productionPeriods[lastOrderIndex1] = sum;
+        }
+        System.out.println(Arrays.toString(productionPeriods));
+
+        // Console Split to EOQ
+        System.out.println("------------------------------------------");
     }
 
-
+    // Method to print the cost matrix and the order schedule.
     private void printCostMatrix() {
         // Print an empty space to align the header of the table.
         System.out.printf("%-16s", "          ");
@@ -120,5 +158,9 @@ public class WagnerWhitinAlgorithm {
 
     public int[][] getCostMatrix() {
         return costMatrix;
+    }
+
+    public int[] getProductionPeriods(){
+        return productionPeriods;
     }
 }

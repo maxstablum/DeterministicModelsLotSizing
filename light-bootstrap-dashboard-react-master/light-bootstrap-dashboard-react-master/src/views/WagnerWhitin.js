@@ -1,129 +1,179 @@
-import React, { useState } from "react";
-import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
-import WagnerWhitinService from '../services/wagner_whitin.service'; // import the service
+import React, { Component } from 'react';
+import { Button, Card, Container, Row, Col, Form } from 'react-bootstrap';
+import WagnerWhitinService from '../services/wagner_whitin.service'; // Import the service
+import WagnerWhitinResults from './WagnerWhitinResults'; // Import the results component
 
-function WagnerWhitin() {
-  const defaultPeriods = 10;
-  const [periods, setPeriods] = useState(
-    Array.from({ length: defaultPeriods }, (_, index) => ({
-      id: index,
-      value: '',
-    }))
-  );
-  const [orderingCost, setOrderingCost] = useState('');
-  const [holdingCost, setHoldingCost] = useState('');
+// WagnerWhitin component
+class WagnerWhitin extends Component {
+    // Constructor
+  constructor(props) {
+    super(props);
+    const usePresetDemands = true; // Value to change for testing cases
 
-  const addPeriod = () => {
-    setPeriods([...periods, { id: periods.length, value: '' }]);
-  };
+    // Preset demand values for testing purposes
+    const presetDemands = [20, 50, 10, 50, 50, 10, 20, 40, 20, 30];
 
-  const handlePeriodChange = (id, value) => {
-    const newPeriods = periods.map((period) =>
-      period.id === id ? { ...period, value: value } : period
-    );
-    setPeriods(newPeriods);
-  };
+    // Set the state 
+    this.state = {
+        periods: Array.from({ length: 10 }, (_, index) => ({
+            id: index,
+            value: usePresetDemands ? presetDemands[index].toString() : '',
+        })),
+        orderingCost: '',
+        holdingCost: '',
+        results: null
+    };
+}
+    // Function to add a period to the view
+    addPeriod = () => {
+        this.setState(prevState => ({
+            periods: [...prevState.periods, { id: prevState.periods.length, value: '' }]
+        }));
+    };
 
-  const calculate = () => {
-    const periodValues = periods.map((period) => parseInt(period.value, 10) || 0);
-    const orderCostInt = parseInt(orderingCost, 10) || 0;
-    const holdingCostInt = parseInt(holdingCost, 10) || 0;
+    // Function to remove a period from the view
+    removePeriod = (id) => {
+        const newPeriods = this.state.periods.filter(period => period.id !== id);
+        this.setState({ periods: newPeriods });
+      };
 
-    // Send data to the service and handle the response
-    WagnerWhitinService.calculateWagnerWhitin(periodValues, holdingCostInt, orderCostInt)
-        .then(response => {
-            console.log("Calculation successful", response.data);
-            // Handle the response data as needed
-            // For example, update the state to display results in the UI
-        })
-        .catch(error => {
-            console.error("There was an error!", error);
-        });
-};
+    // Function to handle the change of a period
+    handlePeriodChange = (id, value) => {
+        const newPeriods = this.state.periods.map(period =>
+            period.id === id ? { ...period, value: value } : period
+        );
+        this.setState({ periods: newPeriods });
+    };
 
+    //Function to send the parameters to the backend with using the WagnerWhitinService
+    calculate = () => {
+        const periodValues = this.state.periods.map(period => parseInt(period.value, 10) || 0);
+        const orderCostInt = parseInt(this.state.orderingCost, 10) || 0;
+        const holdingCostInt = parseInt(this.state.holdingCost, 10) || 0;
+        const isDataIncomplete = this.state.periods.some(period => period.value === '') || 
+        this.state.holdingCost === '' || this.state.orderingCost === '';
 
-  // Helper function to render period input fields
-  const renderPeriodInputs = () => {
-    let inputs = [];
-    for (let i = 0; i < periods.length; i += defaultPeriods) {
-      inputs.push(
-        <Row key={i}>
-          {periods.slice(i, i + defaultPeriods).map((period) => (
-            <Col md={1} key={period.id}>
-              <Form.Group>
-                <Form.Label>{`P${period.id + 1}`}</Form.Label>
-                <Form.Control
-                  type="number"
-                  value={period.value}
-                  onChange={(e) => handlePeriodChange(period.id, e.target.value)}
-                  size="sm"
-                />
-              </Form.Group>
-            </Col>
-          ))}
-        </Row>
+        if (isDataIncomplete) {
+            // Alert the user if data is incomplete
+            alert('Please enter values for all periods.');
+            return;
+        }
+
+        WagnerWhitinService.calculateWagnerWhitin(periodValues, holdingCostInt, orderCostInt)
+            .then(response => {
+                this.setState({ results: response.data }); // Update the state with the results
+                console.log("Calculation successful", response.data);
+            })
+            .catch(error => {
+                console.error("Calculation failed!", error);
+            });
+    };
+
+    // Function to render the period inputs
+    renderPeriodInputs = () => {
+        let inputs = [];
+        for (let i = 0; i < this.state.periods.length; i += 10) {
+          inputs.push(
+            <Row key={i}>
+              {this.state.periods.slice(i, i + 10).map(period => (
+                <Col md={1} key={period.id}>
+                  <Form.Group>
+                    <Form.Label>{`P${period.id + 1}`}</Form.Label>
+                    <Form.Control
+                      type="number"
+                      value={period.value}
+                      onChange={e => this.handlePeriodChange(period.id, e.target.value)}
+                      size="sm"
+                    />
+                  </Form.Group>
+                </Col>
+              ))}
+            </Row>
+          );
+        }
+        
+        return inputs;
+      };
+
+    render() {
+      return (
+          <>
+              <Container fluid>
+                  <Row>
+                      <Col md="12">
+                          <Card>
+                              <Card.Header>
+                                  <Card.Title as="h4">Wagner-Whitin Parameters</Card.Title>
+                              </Card.Header>
+                              <Card.Body>
+                                  <Form>
+                                      <Row>
+                                          {/* Ordering Cost and Holding Cost side by side */}
+                                          <Col md="6">
+                                              <Form.Group>
+                                                  <Form.Label>Ordering Cost</Form.Label>
+                                                  <Form.Control
+                                                      type="number"
+                                                      value={this.state.orderingCost}
+                                                      onChange={(e) => this.setState({ orderingCost: e.target.value })}
+                                                  />
+                                              </Form.Group>
+                                          </Col>
+                                          <Col md="6">
+                                              <Form.Group>
+                                                  <Form.Label>Holding Cost</Form.Label>
+                                                  <Form.Control
+                                                      type="number"
+                                                      value={this.state.holdingCost}
+                                                      onChange={(e) => this.setState({ holdingCost: e.target.value })}
+                                                  />
+                                              </Form.Group>
+                                          </Col>
+                                      </Row>
+                                      {/* Period Inputs */}
+                                      {this.renderPeriodInputs()}
+                                      {/* Add Period Button */}
+                                      <Row>
+                                          <Col md="12">
+                                              <Button variant="primary" onClick={this.addPeriod}>
+                                                  Add Period
+                                              </Button>
+                                          </Col>
+                                      </Row>
+                                      {/* Remove Period Button */}
+                                      <Row>
+                                          <Col md="12">
+                                            <Button variant="danger" onClick={() => this.removePeriod(this.state.periods.length - 1)}>
+                                                Remove Period
+                                            </Button>
+                                          </Col>
+                                      </Row>
+                                        {/* Calculate Button */}
+                                      <Row>
+                                          <Col md="12">
+                                              <Button variant="primary" onClick={this.calculate}>
+                                                  Calculate
+                                              </Button>
+                                          </Col>
+                                      </Row>
+                                  </Form>
+                              </Card.Body>
+                          </Card>
+                      </Col>
+                  </Row>
+              </Container>
+              {/* Conditional Rendering of Results and using the WagnerWhitinResults component*/}
+              {this.state.results && (
+                  <WagnerWhitinResults
+                      totalCost={this.state.results.totalCost}
+                      orderSchedule={this.state.results.orderSchedule}
+                      costMatrix={this.state.results.costMatrix}
+                      productionPeriods={this.state.results.productionPeriods}
+                  />
+              )}
+          </>
       );
-    }
-    return inputs;
-  };
-
-  return (
-    <>
-      <Container fluid>
-        <Row>
-          <Col md="12">
-            <Card>
-              <Card.Header>
-                <Card.Title as="h4">Wagner-Whitin Parameters</Card.Title>
-              </Card.Header>
-              <Card.Body>
-                <Form>
-                  <Row>
-                    {/* Ordering Cost and Holding Cost side by side */}
-                    <Col md="6">
-                      <Form.Group>
-                        <Form.Label>Ordering Cost</Form.Label>
-                        <Form.Control
-                          type="number"
-                          value={orderingCost}
-                          onChange={(e) => setOrderingCost(e.target.value)}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md="6">
-                      <Form.Group>
-                        <Form.Label>Holding Cost</Form.Label>
-                        <Form.Control
-                          type="number"
-                          value={holdingCost}
-                          onChange={(e) => setHoldingCost(e.target.value)}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  {renderPeriodInputs()}
-                  <Row>
-                    <Col md="12">
-                      <Button variant="primary" onClick={addPeriod}>
-                        Add Period
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <Button variant="primary" onClick={calculate}>
-                        Calculate
-                      </Button>
-                    </Col>
-                  </Row>
-                </Form>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
-  );
+  }
 }
 
 export default WagnerWhitin;
