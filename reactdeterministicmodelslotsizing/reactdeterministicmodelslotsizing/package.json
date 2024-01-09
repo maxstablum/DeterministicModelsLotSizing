@@ -2,6 +2,7 @@
   "name": "reactdeterministicmodelslotsizing",
   "version": "2.0.1",
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@fortawesome/fontawesome-free": "5.15.2",
     "axios": "^1.6.3",
     "bootstrap": "4.6.0",
@@ -17,7 +18,7 @@
     "react-scripts": "5.0.1",
     "reactstrap": "8.8.1",
     "sass": "1.53.0",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "xlsx": "^0.18.5"
   },
   "overrides": {
     "autoprefixer": "10.4.5"
