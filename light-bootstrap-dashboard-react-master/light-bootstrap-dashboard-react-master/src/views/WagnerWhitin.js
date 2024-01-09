@@ -4,7 +4,7 @@ import WagnerWhitinService from '../services/wagner_whitin.service'; // Import t
 //import { WagnerWhitinResults } from './WagnerWhitinResults';
 import WagnerWhitinResults from './WagnerWhitinResults'; // Import the results component
 import * as XLSX from 'xlsx';
-import Template from '../assets/xlsx/Import_Deterministic_Models.xlsx'; // Import the Excel file
+import Template from '../assets/xlsx/1Import_Deterministic_Models.xlsx'; // Import the Excel file
 
 
 // WagnerWhitin component
