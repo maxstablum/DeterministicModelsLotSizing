@@ -1,5 +1,5 @@
 {
-  "name": "light-bootstrap-dashboard-react",
+  "name": "reactdeterministicmodelslotsizing",
   "version": "2.0.1",
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.2",
@@ -16,7 +16,8 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "5.0.1",
     "reactstrap": "8.8.1",
-    "sass": "1.53.0"
+    "sass": "1.53.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   },
   "overrides": {
     "autoprefixer": "10.4.5"
