@@ -10,6 +10,32 @@ function filterArray(arr) {
 function removeDuplicates(arr) {
     return [...new Set(arr)];
   }
+
+  // function to adjust the cost matrix, unnecessary values for from the matrix will be removed +++ Already implemented in Backend
+  /**function adjustCostMatrix(costMatrix, productionPeriods) {
+    // Param for the first period that this will also be adjusted
+    let counterFirstPeriod = false;
+    for (let row = 1; row < costMatrix.length; row++) {
+        // check if the production period is not 0 and if the row is smaller than the column
+        for (let col = 0; col < costMatrix[row].length; col++) {
+            if (productionPeriods[col] != 0 && row<col) { // For this rows the value needs to be adjusted
+                // Adjust the columns in row when the production is settled
+                for (let prevCol = col+1; prevCol < costMatrix[row].length; prevCol++) {
+                    costMatrix[row][prevCol] = 0;
+                }
+                // Adjust the first period
+                if (counterFirstPeriod == false) {
+                    for (let prevRow = col+1; prevRow < costMatrix[row].length; prevRow++) {
+                    costMatrix[row-1][prevRow] = 0;
+                    counterFirstPeriod = true;
+                    }
+                }
+                break; // Break the loop
+            }
+        }
+    }
+    return costMatrix;
+}*/
   
 // WagnerWhitinResults component
 class WagnerWhitinResults extends Component {
@@ -22,7 +48,7 @@ class WagnerWhitinResults extends Component {
         const orderScheduleArray = removeDuplicates(orderSchedule);
 
         
-        
+       
         // Inline styles
         const smallTableStyle = {
             fontSize: "0.8rem", // Smaller font size
@@ -32,6 +58,7 @@ class WagnerWhitinResults extends Component {
         const smallCellStyle = {
             padding: "0.2rem", // Smaller padding for cells
         };
+
 
         return (
             <Container className="mt-4">

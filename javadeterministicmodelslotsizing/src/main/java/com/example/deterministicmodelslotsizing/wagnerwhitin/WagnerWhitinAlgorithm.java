@@ -73,8 +73,6 @@ public class WagnerWhitinAlgorithm {
             }
         }
 
-        // Print the cost matrix and the order schedule.
-        printCostMatrix();
 
         // Print the production periods
         int lastOrderIndex = -1;
@@ -103,9 +101,36 @@ public class WagnerWhitinAlgorithm {
             productionPeriods[lastOrderIndex1] = sum;
         }
         System.out.println(Arrays.toString(productionPeriods));
-
+        adjustCostMatrix();
+        // Print the cost matrix and the order schedule.
+        printCostMatrix();
         // Console Split to EOQ
         System.out.println("------------------------------------------");
+    }
+
+    private void adjustCostMatrix(){
+        // Param for the first period that this will also be adjusted
+        boolean counterFirstPeriod = false;
+        for (int row = 1; row < costMatrix.length; row++) {
+            // check if the production period is not 0 and if the row is smaller than the column
+            for (int col = 0; col < costMatrix[row].length; col++) {
+                if (productionPeriods[col] != 0 && row<col) { // For this rows the value needs to be adjusted
+                    // Adjust the columns in row when the production is settled
+                    for (int prevCol = col+1; prevCol < costMatrix[row].length; prevCol++) {
+                        costMatrix[row][prevCol] = 0;
+
+                    }
+                    // Adjust the first period
+                    if (counterFirstPeriod == false) {
+                        for (int prevRow = col+1; prevRow < costMatrix[row].length; prevRow++) {
+                            costMatrix[row-1][prevRow] = 0;
+                            counterFirstPeriod = true;
+                        }
+                    }
+                    break; // Break the loop
+                }
+            }
+        }
     }
 
     // Method to print the cost matrix and the order schedule.
