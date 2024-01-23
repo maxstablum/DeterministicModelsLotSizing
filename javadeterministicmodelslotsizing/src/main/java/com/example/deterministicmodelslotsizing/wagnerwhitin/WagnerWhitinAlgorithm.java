@@ -77,14 +77,14 @@ public class WagnerWhitinAlgorithm {
         // Print the production periods
         int lastOrderIndex = -1;
         int sum = 0;
-        System.out.println("Order Quantities per Period:");
+        //System.out.println("Order Quantities per Period:");
         // Go through each week in the order schedule.
         for (int i = 0; i < orderSchedule.length; i++) {
             // If it's the first week or the order schedule value is different from the previous one
             if (i == 0 || orderSchedule[i] != orderSchedule[lastOrderIndex]) {
                 // Print the order quantity for the previous order if it exists.
                 if (lastOrderIndex != -1) {
-                    System.out.println("Order in period " + (orderSchedule[lastOrderIndex] + 1) + ": " + sum + " units");
+                    //System.out.println("Order in period " + (orderSchedule[lastOrderIndex] + 1) + ": " + sum + " units");
                     productionPeriods[i] = sum;
                 }
                 // Update the last order index and the sum of the order quantity.
@@ -96,11 +96,11 @@ public class WagnerWhitinAlgorithm {
         }
         // Printing the last order if it exists
         if (lastOrderIndex != -1) {
-            System.out.println("Order in period " + (orderSchedule[lastOrderIndex] + 1) + ": " + sum + " units");
+            //System.out.println("Order in period " + (orderSchedule[lastOrderIndex] + 1) + ": " + sum + " units");
             int lastOrderIndex1 = lastOrderIndex+1;
             productionPeriods[lastOrderIndex1] = sum;
         }
-        System.out.println(Arrays.toString(productionPeriods));
+        //System.out.println(Arrays.toString(productionPeriods));
         adjustCostMatrix();
         // Print the cost matrix and the order schedule.
         printCostMatrix();
