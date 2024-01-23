@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
 import eoqService from "../services/eoq.service";
+import * as XLSX from "xlsx";
+import Template from "../assets/xlsx/1Import_Deterministic_Models.xlsx"; // Import the Excel file
 
 // EOQ component
 export default class EOQ extends Component {
@@ -17,7 +19,7 @@ export default class EOQ extends Component {
     // Set the state
     this.state = {
       weeklyDemand: 19,
-      weeksPerYear: 52,
+      weeksPerYear: 1,
       aSetup: 45,
       h: 15,
       response: null,
@@ -28,24 +30,48 @@ export default class EOQ extends Component {
    * On Change handlers:
    */
   onChangeDemand(e) {
+    if (e.target.value < 1) {
+      this.setState({
+        weeklyDemand: 1,
+      });
+      return;
+    }
     this.setState({
       weeklyDemand: parseInt(e.target.value),
     });
   }
 
   onChangeWeeksPerYear(e) {
+    if (e.target.value < 1) {
+      this.setState({
+        weeksPerYear: 1,
+      });
+      return;
+    }
     this.setState({
       weeksPerYear: parseFloat(e.target.value),
     });
   }
 
   onChangeASetup(e) {
+    if (e.target.value < 1) {
+      this.setState({
+        aSetup: 1,
+      });
+      return;
+    }
     this.setState({
       aSetup: parseInt(e.target.value),
     });
   }
 
   onChangeH(e) {
+    if (e.target.value < 1) {
+      this.setState({
+        h: 1,
+      });
+      return;
+    }
     this.setState({
       h: parseInt(e.target.value),
     });
@@ -75,7 +101,9 @@ export default class EOQ extends Component {
             <Col md="12">
               <Card>
                 <Card.Header>
-                  <Card.Title as="h4">EOQ Parameters</Card.Title>
+                  <Card.Title as="h4">
+                    Economic Order Quantity - Parameters
+                  </Card.Title>
                 </Card.Header>
                 <Card.Body>
                   <Form>
@@ -139,7 +167,95 @@ export default class EOQ extends Component {
             </Col>
           </Row>
           <Row>
-            <Col md="12">Result: {this.state.response}</Col>
+            <Col md="12">Optimal Reorder Point: {this.state.response}</Col>
+          </Row>
+          <Card style={{ width: "18rem" }}>
+            <Card.Body>
+              <Card.Title as="h4">Optimal Reorder Point:</Card.Title>
+              <Card.Text
+                as="h1"
+                style={{
+                  fontSize: "3rem",
+                  fontWeight: "bold",
+                  color: "#007BFF",
+                }}
+              >
+                17
+              </Card.Text>
+              <Card.Text as="h4">{this.state.response}</Card.Text>
+            </Card.Body>
+          </Card>
+
+          <Row>
+            <Col fluid>
+              <Card>
+                <Card.Header>
+                  <Card.Title as="h4">Calculate your annual demand</Card.Title>
+                </Card.Header>
+                <Card.Body>
+                  <Form>
+                    If you're unsure about your annual demand rate, we've got
+                    you covered. We've created a convenient Excel template that
+                    allows you to input your relevant data effortlessly. Simply
+                    download the template, fill it in with your details, and
+                    then upload it here to seamlessly calculate your Economic
+                    Order Quantity (EOQ). It's quick, easy, and ensures accurate
+                    results tailored to your specific needs.
+                    <br />
+                    <br />
+                    Follow these simple steps:
+                    <br />
+                    <ol>
+                      <li>
+                        Download the Excel template provided on our website.
+                      </li>
+                      <li>
+                        Input your dayily/weekly/quarterly demand rate, setup
+                        costs, and holding costs into the template.
+                      </li>
+                      <li>Save and upload the completed template.</li>
+                      <li>
+                        Let our website do the calculations for you and provide
+                        your optimal EOQ!
+                      </li>
+                    </ol>
+                    <b>Tip:</b> You can use the same template to calculate the{" "}
+                    <a href="http://localhost:3000/admin/wagnerwhitin">
+                      Wagner Whitin
+                    </a>
+                    !
+                    <Row>
+                      <Col md={{ span: 6, offset: 6 }}>
+                        <div className="text-right">
+                          <p>
+                            Insert data from the
+                            <a
+                              href={Template}
+                              download="Import_Deterministic_Models.xlsx"
+                            >
+                              {" "}
+                              Template
+                            </a>
+                          </p>
+                          <label
+                            htmlFor="custom-file"
+                            className="btn btn-primary"
+                          >
+                            Upload Excel File
+                          </label>
+                          <input
+                            id="custom-file"
+                            type="file"
+                            onChange={this.handleFileChange}
+                            style={{ display: "none" }}
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                  </Form>
+                </Card.Body>
+              </Card>
+            </Col>
           </Row>
         </Container>
       </div>

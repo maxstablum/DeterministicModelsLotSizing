@@ -15,7 +15,7 @@ public class EOQ {
     double optimalQ;
 
     //Constructor 
-    public double eoqMethod(double setWeeklyDemand, int setWeeksPerYear, int setA, int setH){
+    public long eoqMethod(double setWeeklyDemand, int setWeeksPerYear, int setA, int setH){
         weeklyDemand = setWeeklyDemand;
         weeksPerYear = setWeeksPerYear;
         aSetup = setA;
@@ -23,8 +23,9 @@ public class EOQ {
         D = weeklyDemand * weeksPerYear;
         System.out.println("Anual demand D: " + D);
         optimalQ = Math.sqrt((2* aSetup *D)/h);
-        System.out.println("economic order quantity EOQ is: " + optimalQ);
-        return optimalQ;
+        System.out.println("Economic order quantity EOQ is: " + optimalQ);
+        System.out.println("Rounded economic order quantity EOQ is: " + Math.round(optimalQ));
+        return Math.round(optimalQ);
     }
     //Different option: mange via setters and getters
         //Getters & Setters:

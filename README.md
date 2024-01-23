@@ -23,7 +23,7 @@ The "Deterministic Models for Lot Sizing" project is focused on developing an ap
 To set up the project locally, follow these steps:
 
 1. **Initialize React project**:
-   Into the directory: DeterministicModelsLotSizing/light-bootstrap-dashboard-react-master/light-bootstrap-dashboard-react-master
+   Into the directory: **DeterministicModelsLotSizing/reactdeterministicmodelslotsizing/reactdeterministicmodelslotsizing**
 
    ```bash
    npm install --legacy-peer-deps
