@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
 import eoqService from "../services/eoq.service";
+import * as XLSX from "xlsx";
+import Template from "../assets/xlsx/1Import_Deterministic_Models.xlsx"; // Import the Excel file
 
 // EOQ component
 export default class EOQ extends Component {
@@ -8,7 +10,6 @@ export default class EOQ extends Component {
   constructor(props) {
     super(props);
     this.onChangeDemand = this.onChangeDemand.bind(this);
-    this.onChangeWeeksPerYear = this.onChangeWeeksPerYear.bind(this);
     this.onChangeASetup = this.onChangeASetup.bind(this);
     this.onChangeH = this.onChangeH.bind(this);
     this.calculate = this.calculate.bind(this);
@@ -16,11 +17,10 @@ export default class EOQ extends Component {
     //Old method: this.upload = this.upload.bind(this);
     // Set the state
     this.state = {
-      weeklyDemand: 19,
-      weeksPerYear: 52,
-      aSetup: 45,
-      h: 15,
-      response: null,
+      averageDemand: null,
+      aSetup: null,
+      h: null,
+      file: null,
     };
   }
 
@@ -28,31 +28,132 @@ export default class EOQ extends Component {
    * On Change handlers:
    */
   onChangeDemand(e) {
+    console.log(e.target.value);
+    if (e.target.value < 0) {
+      this.setState({
+        averageDemand: 0,
+      });
+      return;
+    }
     this.setState({
-      weeklyDemand: parseInt(e.target.value),
-    });
-  }
-
-  onChangeWeeksPerYear(e) {
-    this.setState({
-      weeksPerYear: parseFloat(e.target.value),
+      averageDemand: parseFloat(e.target.value),
     });
   }
 
   onChangeASetup(e) {
+    if (e.target.value < 0) {
+      this.setState({
+        aSetup: 0,
+      });
+      return;
+    }
     this.setState({
-      aSetup: parseInt(e.target.value),
+      aSetup: parseFloat(e.target.value),
     });
   }
 
   onChangeH(e) {
+    if (e.target.value < 0) {
+      this.setState({
+        h: 0,
+      });
+      return;
+    }
     this.setState({
-      h: parseInt(e.target.value),
+      h: parseFloat(e.target.value),
     });
   }
 
+  handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      this.setState({ file }, () => {
+        this.handleSubmit();
+        console.log(this.state);
+        this.calculate();
+      });
+    }
+  };
+
+  handleSubmit = () => {
+    const { file } = this.state;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const data = e.target.result;
+      const workbook = XLSX.read(data, { type: "binary" });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      try {
+        this.processData(json);
+      } catch (error) {
+        alert("Error while processing the file: " + error.message);
+      }
+    };
+    reader.readAsBinaryString(file);
+    document.getElementById("custom-file").value = "";
+  };
+
+  processData = (data) => {
+    console.log(data);
+    // Looking for the setup cost and holding cost
+    const h = data[2][1];
+    const aSetup = data[3][1];
+
+    // Looking for the demand values and calculate a average
+    const seventhRow = data[6];
+    console.log("seventhRow:", seventhRow);
+    // Summiere die Werte von Index 1 bis zum Ende
+    const sum = seventhRow
+      .slice(1)
+      .reduce((accumulator, value) => accumulator + value, 0);
+
+    // Berechne den Durchschnitt
+    const averageDemand = sum / (seventhRow.length - 1); // Subtrahiere 1, da das erste Element "Demand" übersprungen wird
+
+    console.log("Durchschnitt:", averageDemand);
+
+    console.log("----------------------");
+    // Update the state
+    //Calculate the average demand
+    this.setState(
+      {
+        averageDemand,
+        aSetup,
+        h,
+      },
+      () => {
+        this.calculate();
+      }
+    );
+  };
+
   // Function to send the parameters to the backend with using the eoqService
   calculate = () => {
+    // Check if the parameters are valid
+    if (
+      this.state.averageDemand === null ||
+      isNaN(this.state.averageDemand) ||
+      this.state.averageDemand === 0
+    ) {
+      alert("Please enter a valid average demand.");
+      return;
+    }
+
+    if (
+      this.state.aSetup === null ||
+      isNaN(this.state.aSetup) ||
+      this.state.aSetup === 0
+    ) {
+      alert("Please enter valid setup costs.");
+      return;
+    }
+
+    if (this.state.h === null || isNaN(this.state.h) || this.state.h === 0) {
+      alert("Please enter valid holding costs.");
+      return;
+    }
+
     // Send data to the service and handle the response
     eoqService
       .create(this.state)
@@ -75,36 +176,25 @@ export default class EOQ extends Component {
             <Col md="12">
               <Card>
                 <Card.Header>
-                  <Card.Title as="h4">EOQ Parameters</Card.Title>
+                  <Card.Title as="h4">
+                    Economic Order Quantity - Parameters
+                  </Card.Title>
                 </Card.Header>
                 <Card.Body>
                   <Form>
                     <Row>
                       {/* Weekly Demand and Weeks per Year side by side */}
-                      <Col md="6">
+                      <Col md="3">
                         <Form.Group>
-                          <Form.Label>Weekly Demand</Form.Label>
+                          <Form.Label>Average Demand in Time Period</Form.Label>
                           <Form.Control
                             type="number"
-                            value={this.state.weeklyDemand}
+                            value={this.state.averageDemand}
                             onChange={this.onChangeDemand}
                           />
                         </Form.Group>
                       </Col>
-                      <Col md="6">
-                        <Form.Group>
-                          <Form.Label>Weeks per Year</Form.Label>
-                          <Form.Control
-                            type="number"
-                            value={this.state.weeksPerYear}
-                            onChange={this.onChangeWeeksPerYear}
-                          />
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Row>
-                      {/* Setup Cost and Holding Cost side by side */}
-                      <Col md="6">
+                      <Col md="3">
                         <Form.Group>
                           <Form.Label>Setup Costs</Form.Label>
                           <Form.Control
@@ -114,7 +204,7 @@ export default class EOQ extends Component {
                           />
                         </Form.Group>
                       </Col>
-                      <Col md="6">
+                      <Col md="3">
                         <Form.Group>
                           <Form.Label>Holding Costs</Form.Label>
                           <Form.Control
@@ -133,13 +223,99 @@ export default class EOQ extends Component {
                         </Button>
                       </Col>
                     </Row>
+                    <br />
+                    <Row className="align-items-center">
+                      <Col xs="auto" as="h5">
+                        <br />
+                        Optimal Reorder Quantity:
+                      </Col>
+                      <Col
+                        xs="auto"
+                        className="text-left"
+                        style={{
+                          fontSize: "2rem",
+                          fontWeight: "bold",
+                          color: "#007BFF",
+                        }}
+                      >
+                        {this.state.response}
+                      </Col>
+                    </Row>
                   </Form>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
           <Row>
-            <Col md="12">Result: {this.state.response}</Col>
+            <Col fluid>
+              <Card>
+                <Card.Header>
+                  <Card.Title as="h4">Calculate your average demand</Card.Title>
+                </Card.Header>
+                <Card.Body>
+                  <Form>
+                    If you're unsure about your average demand rate, we've got
+                    you covered. We've created a convenient Excel template that
+                    allows you to input your relevant data effortlessly. Simply
+                    download the template, fill it in with your details, and
+                    then upload it here to seamlessly calculate your Economic
+                    Order Quantity (EOQ). It's quick, easy, and ensures accurate
+                    results tailored to your specific needs.
+                    <br />
+                    <br />
+                    Follow these simple steps:
+                    <br />
+                    <ol>
+                      <li>
+                        Download the Excel template provided on our website.
+                      </li>
+                      <li>
+                        Input your dayily/weekly/quarterly demand rate, setup
+                        costs, and holding costs into the template.
+                      </li>
+                      <li>Save and upload the completed template.</li>
+                      <li>
+                        Let our website do the calculations for you and provide
+                        your optimal EOQ!
+                      </li>
+                    </ol>
+                    <b>Tip:</b> You can use the same template to calculate the{" "}
+                    <a href="http://localhost:3000/admin/wagnerwhitin">
+                      Wagner Whitin
+                    </a>
+                    !
+                    <Row>
+                      <Col md={{ span: 6, offset: 6 }}>
+                        <div className="text-right">
+                          <p>
+                            Insert data from the
+                            <a
+                              href={Template}
+                              download="Import_Deterministic_Models.xlsx"
+                            >
+                              {" "}
+                              Template
+                            </a>
+                          </p>
+                          <label
+                            htmlFor="custom-file"
+                            className="btn btn-primary"
+                          >
+                            Upload Excel File
+                          </label>
+                          <input
+                            id="custom-file"
+                            type="file"
+                            onChange={this.handleFileChange}
+                            style={{ display: "none" }}
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                  </Form>
+                </Card.Body>
+              </Card>
+            </Col>
           </Row>
         </Container>
       </div>

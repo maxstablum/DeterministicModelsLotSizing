@@ -7,45 +7,36 @@ package com.example.deterministicmodelslotsizing.eoq;
 public class EOQ {
 
     //Attributes:
-    double weeklyDemand;
-    int weeksPerYear;
-    double D;
-    int aSetup;
-    int h;
+
+    double averageDemand;
+    double aSetup;
+    double h;
     double optimalQ;
 
     //Constructor 
-    public double eoqMethod(double setWeeklyDemand, int setWeeksPerYear, int setA, int setH){
-        weeklyDemand = setWeeklyDemand;
-        weeksPerYear = setWeeksPerYear;
+    public long eoqMethod(double setDemand, double setA, double setH){
+        averageDemand = setDemand;
         aSetup = setA;
         h = setH;
-        D = weeklyDemand * weeksPerYear;
-        System.out.println("Anual demand D: " + D);
-        optimalQ = Math.sqrt((2* aSetup *D)/h);
-        System.out.println("economic order quantity EOQ is: " + optimalQ);
-        return optimalQ;
+        System.out.println("Anual demand D: " + averageDemand);
+        optimalQ = Math.sqrt((2* aSetup * averageDemand)/h);
+        System.out.println("Economic order quantity EOQ is: " + optimalQ);
+        System.out.println("Rounded economic order quantity EOQ is: " + Math.round(optimalQ));
+        return Math.round(optimalQ);
     }
     //Different option: mange via setters and getters
         //Getters & Setters:
-        public void setD(double d) {
-            D = d;
+        public void setAverageDemand(double averageDemand) {
+            this.averageDemand = averageDemand;
         }
 
         //Setters
-        public void setWeeklyDemand(double weeklyDemand) {
-            this.weeklyDemand = weeklyDemand;
-        }
 
-        public void setWeeksPerYear(int weeksPerYear) {
-            this.weeksPerYear = weeksPerYear;
-        }
-
-        public void setaSetup(int aSetup) {
+        public void setaSetup(double aSetup) {
             this.aSetup = aSetup;
         }
 
-        public void setH(int h) {
+        public void setH(double h) {
             this.h = h;
         }
 
@@ -58,52 +49,16 @@ public class EOQ {
             return optimalQ;
         }
 
-        public double getWeeklyDemand() {
-            return weeklyDemand;
+        public double getAverageDemand() {
+            return averageDemand;
         }
 
-        public int getWeeksPerYear() {
-            return weeksPerYear;
-        }
-
-        public double getD() {
-            return D;
-        }
-
-        public int getH() {
+        public double getH() {
             return h;
         }
 
-        public int getaSetup() {
+        public double getaSetup() {
             return aSetup;
-        }
-
-        //Idea: Check first all three values (demand, A, h) and check afterwards for the most sensitive one
-        public String sensitivityAnalysis(){
-            EOQ sensitivityCalculator = new EOQ();
-            String message = "Error";
-            if (optimalQ == 0.0){
-                message = "EOQ has not yet been calculated. Please insert values.";
-            }
-            else {
-                sensitivityCalculator.eoqMethod(weeklyDemand, weeksPerYear, aSetup, h);
-                sensitivityCalculator.setD(D+1);
-                    // Demand sens
-                if (optimalQ/sensitivityCalculator.getOptimalQ() < 1) {
-                    message = "The demand is the most sensitive parameter. If the demand increase Q decrease.";
-                    System.out.println("Demand Sens:" + sensitivityCalculator.getOptimalQ());
-                    // Set-up sens
-                } else if (sensitivityCalculator.eoqMethod(weeklyDemand, weeksPerYear, aSetup +1, h)/optimalQ < 1) {
-                    message = "The set-up costs are the most sensitive parameter. If the set-up costs increase Q decrease.";
-                    System.out.println("set-up sens:" + sensitivityCalculator.getOptimalQ());
-                    // Holding send
-                } else if (sensitivityCalculator.eoqMethod(weeklyDemand, weeksPerYear, aSetup, h+1) / optimalQ < 1) {
-                    message = "The holding costs are the most sensitive parameter. If the holding cost increase Q decrease.";
-                    System.out.println("holding sens" + sensitivityCalculator.getOptimalQ());
-                }
-            }
-
-            return message;
         }
 
 }
