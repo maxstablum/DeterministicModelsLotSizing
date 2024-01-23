@@ -56,6 +56,17 @@ public class WagnerWhitinResponse {
         this.productionPeriods = productionPeriods;
     }
 
+    public String getTotalCostString(){
+        return Arrays.toString(totalCost);
+    }
+
+    public String getOrderScheduleString(){
+        return Arrays.toString(orderSchedule);
+    }
+
+    public String getCostMatrixString(){
+        return Arrays.deepToString(costMatrix);
+    }
     // toString method
     @Override
     public String toString() {
