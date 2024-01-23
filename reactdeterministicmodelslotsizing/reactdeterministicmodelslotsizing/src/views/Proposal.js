@@ -58,6 +58,7 @@ const Proposal = () => {
               </p>
             </Col>
           </Row>
+          
         </Card.Body>
       </Card>
     </Container>

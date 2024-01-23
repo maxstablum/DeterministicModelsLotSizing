@@ -3,6 +3,7 @@ import { Button, Card, Container, Row, Col, Form } from "react-bootstrap";
 import eoqService from "../services/eoq.service";
 import * as XLSX from "xlsx";
 import Template from "../assets/xlsx/1Import_Deterministic_Models.xlsx"; // Import the Excel file
+import costImg from "../assets/img/cost.png";
 
 // EOQ component
 export default class EOQ extends Component {
@@ -315,6 +316,18 @@ export default class EOQ extends Component {
                   </Form>
                 </Card.Body>
               </Card>
+              <Row
+                      className="justify-content-center align-items-center"
+                      style={{ marginTop: "5vh" }}
+                    >
+                      <img
+                        src={costImg}
+                        width="40%"
+                        height="auto"
+                        alt="Centered Image"
+                        style={{ maxWidth: "100%", maxHeight: "100%" }}
+                      />
+                    </Row>
             </Col>
           </Row>
         </Container>

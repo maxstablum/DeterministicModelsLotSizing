@@ -2,17 +2,16 @@ import React from "react";
 // react-bootstrap components
 import { Card, Container, Row, Col } from "react-bootstrap";
 
-import costImg from "../assets/img/cost.png";
 import cartoonMan from "../assets/img/cartoonMan.png";
 import header from "../assets/img/Header.png";
 
 function Homepage() {
   const pageBackgroundStyle = {
     backgroundImage: `url(${header})`,
-    backgroundSize: "100% auto",
-    backgroundPosition: "top center",
+    backgroundSize: "cover",
+    backgroundPosition: "center center", 
     backgroundRepeat: "no-repeat",
-    minHeight: "100vh",
+    //minHeight: "100vh",
     width: "100%",
   };
 
@@ -157,18 +156,7 @@ function Homepage() {
             </Card>
           </Col>
         </Row>
-        <Row
-          className="justify-content-center align-items-center"
-          style={{ marginTop: "15vh" }}
-        >
-          <img
-            src={costImg}
-            width="40%"
-            height="auto"
-            alt="Centered Image"
-            style={{ maxWidth: "100%", maxHeight: "100%" }}
-          />
-        </Row>
+       
       </Container>
     </>
   );
