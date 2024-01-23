@@ -1,30 +1,32 @@
 import React from "react";
 // react-bootstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  Navbar,
-  Nav,
-  Table,
-  Container,
-  Row,
-  Col,
-  Form,
-  OverlayTrigger,
-  Tooltip,
-} from "react-bootstrap";
+import { Card, Container, Row, Col } from "react-bootstrap";
 
 import costImg from "../assets/img/cost.png";
 import cartoonMan from "../assets/img/cartoonMan.png";
+import header from "../assets/img/Header.png";
 
 function Homepage() {
+  const pageBackgroundStyle = {
+    backgroundImage: `url(${header})`,
+    backgroundSize: "100% auto",
+    backgroundPosition: "top center",
+    backgroundRepeat: "no-repeat",
+    minHeight: "100vh",
+    width: "100%",
+  };
+
+  const cardStyle = {
+    backgroundColor: "white",
+    marginTop: "16%",
+  };
+
   return (
     <>
-      <Container fluid>
+      <Container fluid style={pageBackgroundStyle}>
         <Row>
           <Col fluid>
-            <Card>
+            <Card style={cardStyle}>
               <Card.Header>
                 <Card.Title as="h4">
                   Term Project - Deterministic Models for Lot Sizing
@@ -126,7 +128,10 @@ function Homepage() {
             </Card>
           </Col>
         </Row>
-        <Row className="justify-content-center align-items-center">
+        <Row
+          className="justify-content-center align-items-center"
+          style={{ marginTop: "15vh" }}
+        >
           <img
             src={costImg}
             width="40%"

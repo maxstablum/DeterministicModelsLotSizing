@@ -16,11 +16,12 @@ public class EOQController {
         public double calculate(@RequestBody EOQ request) {
             // Response generation based on the RequestBody
             System.out.println("getA: " + request.getaSetup());
+            System.out.println("getD: " + request.getAverageDemand());
+            System.out.println("getH: " + request.getH());
             // Calculate the EOQ with help of the algorithm
             EOQ eoq = new EOQ();
             double result = eoq.eoqMethod(
-                    request.getWeeklyDemand(),
-                    request.getWeeksPerYear(),
+                    request.getAverageDemand(),
                     request.getaSetup(),
                     request.getH()
             );

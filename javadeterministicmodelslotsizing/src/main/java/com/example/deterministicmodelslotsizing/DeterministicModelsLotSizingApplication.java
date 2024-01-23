@@ -29,8 +29,7 @@ public class DeterministicModelsLotSizingApplication {
 
         // Calculate the EOQ with help of the algorithm
         EOQ eoq1 = new EOQ();
-        System.out.println(eoq1.eoqMethod(19, 52, 45, 15));
-        System.out.println(eoq1.sensitivityAnalysis());
+        System.out.println(eoq1.eoqMethod(19, 45, 15));
 
     }
 
