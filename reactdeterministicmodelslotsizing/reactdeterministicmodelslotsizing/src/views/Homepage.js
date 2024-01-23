@@ -18,14 +18,43 @@ function Homepage() {
 
   const cardStyle = {
     backgroundColor: "white",
-    marginTop: "16%",
+    marginTop: "3%",
   };
 
   return (
     <>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Palatino+Linotype&display=swap"
+      />
       <Container fluid style={pageBackgroundStyle}>
         <Row>
           <Col fluid>
+            <Card
+              style={{
+                width: "32rem",
+                backgroundColor: "rgba(110, 110, 110, 0.7)",
+                position: "relative",
+                marginTop: "5%",
+                marginLeft: "10%", // Setzt einen Abstand vom oberen Rand
+                padding: "2rem",
+              }}
+            >
+              <Card.Title
+                as="h2"
+                className="text-white"
+                style={{
+                  fontFamily:
+                    "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
+                }}
+              >
+                <b>EOQ and Wagner Whitin</b>
+              </Card.Title>
+            </Card>
             <Card style={cardStyle}>
               <Card.Header>
                 <Card.Title as="h4">
