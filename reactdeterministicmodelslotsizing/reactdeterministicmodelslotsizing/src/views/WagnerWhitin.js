@@ -52,25 +52,36 @@ class WagnerWhitin extends Component {
 
     //Function to send the parameters to the backend with using the WagnerWhitinService
     calculate = () => {
-        const periodValues = this.state.periods.map(period => parseInt(period.value, 10) || 0);
-        const orderCostInt = parseInt(this.state.orderingCost, 10) || 0;
-        const holdingCostInt = parseInt(this.state.holdingCost, 10) || 0;
+        const periodValues = this.state.periods.map(period => parseFloat(period.value) || 0);
+        const orderCostFloat = parseFloat(this.state.orderingCost) || 0;
+        const holdingCostFloat = parseFloat(this.state.holdingCost) || 0;
+
         const isDataIncomplete = this.state.periods.some(period => period.value === '') || 
         this.state.holdingCost === '' || this.state.orderingCost === '';
-
+    
         if (isDataIncomplete) {
-            // Alert the user if data is incomplete
             alert('Please enter values for all periods.');
             return;
         }
+    
+        if (orderCostFloat <= 0) {
+            alert('The setup cost must be greater than zero.');
+            return;
+        }
+    
+        if (holdingCostFloat <= 0) {
+            alert('The holding cost must be greater than zero.');
+            return;
+        }
 
-        WagnerWhitinService.calculateWagnerWhitin(periodValues, holdingCostInt, orderCostInt)
+        WagnerWhitinService.calculateWagnerWhitin(periodValues, holdingCostFloat, orderCostFloat)
             .then(response => {
                 this.setState({ results: response.data }); // Update the state with the results
                 console.log("Calculation successful", response.data);
             })
             .catch(error => {
                 console.error("Calculation failed!", error);
+                alert('Calculation failed! Please check that the backend is available.');
             });
     };
 
@@ -102,15 +113,18 @@ class WagnerWhitin extends Component {
 
       handleFileChange = (event) => {
         const file = event.target.files[0];
-        if (file) {
+        if (file) {       
             this.setState({ file }, () => {
                 this.handleSubmit();
             });
+    
         }
     };
     
     handleSubmit = () => {
         const { file } = this.state;
+        if (!file) return;
+    
         const reader = new FileReader();
         reader.onload = (e) => {
             const data = e.target.result;
@@ -121,14 +135,17 @@ class WagnerWhitin extends Component {
             try {
                 this.processData(json);
             } catch (error) {
-                alert('Fehler beim Verarbeiten der Datei: ' + error.message);
+                alert('Error when processing the file: ' + error.message);
             }
         };
         reader.readAsBinaryString(file);
+        document.getElementById("custom-file").value = "";
     };
+
+    
     
     processData = (data) => {
-        console.log(data);
+        //console.log(data);
         // Looking for the ordering cost and holding cost    
         const holdingCost = data[2][1];
         const orderingCost = data[3][1];
@@ -166,7 +183,7 @@ class WagnerWhitin extends Component {
                                           {/* Ordering Cost and Holding Cost side by side */}
                                           <Col md="6">
                                               <Form.Group>
-                                                  <Form.Label>Ordering Cost</Form.Label>
+                                                  <Form.Label>Setup Cost</Form.Label>
                                                   <Form.Control
                                                       type="number"
                                                       value={this.state.orderingCost}
