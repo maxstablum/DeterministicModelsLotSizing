@@ -9,7 +9,7 @@ function Homepage() {
   const pageBackgroundStyle = {
     backgroundImage: `url(${header})`,
     backgroundSize: "cover",
-    backgroundPosition: "center center", 
+    backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
     //minHeight: "100vh",
     width: "100%",
@@ -94,7 +94,7 @@ function Homepage() {
                 ordering costs).
                 <br />
                 <br />
-                <b>Wagner whitin Algorithm:</b>
+                <b>Wagner Whitin Algorithm:</b>
                 <br />
                 The Wagner Whitin algorithm, on the other hand, is designed for
                 dynamic inventory management, especially in scenarios with
@@ -156,7 +156,6 @@ function Homepage() {
             </Card>
           </Col>
         </Row>
-       
       </Container>
     </>
   );

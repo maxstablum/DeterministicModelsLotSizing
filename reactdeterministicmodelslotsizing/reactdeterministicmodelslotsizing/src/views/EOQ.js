@@ -70,8 +70,7 @@ export default class EOQ extends Component {
     if (file) {
       this.setState({ file }, () => {
         this.handleSubmit();
-        console.log(this.state);
-        this.calculate();
+        //console.log(this.state);
       });
     }
   };
@@ -317,17 +316,17 @@ export default class EOQ extends Component {
                 </Card.Body>
               </Card>
               <Row
-                      className="justify-content-center align-items-center"
-                      style={{ marginTop: "5vh" }}
-                    >
-                      <img
-                        src={costImg}
-                        width="40%"
-                        height="auto"
-                        alt="Centered Image"
-                        style={{ maxWidth: "100%", maxHeight: "100%" }}
-                      />
-                    </Row>
+                className="justify-content-center align-items-center"
+                style={{ marginTop: "5vh" }}
+              >
+                <img
+                  src={costImg}
+                  width="40%"
+                  height="auto"
+                  alt="Centered Image"
+                  style={{ maxWidth: "100%", maxHeight: "100%" }}
+                />
+              </Row>
             </Col>
           </Row>
         </Container>
