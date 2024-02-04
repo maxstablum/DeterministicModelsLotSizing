@@ -7,31 +7,26 @@ package com.example.deterministicmodelslotsizing.eoq;
 public class EOQ {
 
     //Attributes:
-
     double averageDemand;
     double aSetup;
     double h;
     double optimalQ;
 
-    //Constructor 
+    //Method to calculate the EOQ
     public long eoqMethod(double setDemand, double setA, double setH){
         averageDemand = setDemand;
         aSetup = setA;
         h = setH;
-        System.out.println("Anual demand D: " + averageDemand);
         optimalQ = Math.sqrt((2* aSetup * averageDemand)/h);
         System.out.println("Economic order quantity EOQ is: " + optimalQ);
-        System.out.println("Rounded economic order quantity EOQ is: " + Math.round(optimalQ));
         return Math.round(optimalQ);
     }
-    //Different option: mange via setters and getters
         //Getters & Setters:
         public void setAverageDemand(double averageDemand) {
             this.averageDemand = averageDemand;
         }
 
         //Setters
-
         public void setaSetup(double aSetup) {
             this.aSetup = aSetup;
         }
