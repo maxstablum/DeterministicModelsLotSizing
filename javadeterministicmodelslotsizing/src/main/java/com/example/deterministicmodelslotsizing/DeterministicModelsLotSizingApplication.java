@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.example.deterministicmodelslotsizing.wagnerwhitin.WagnerWhitinAlgorithm;
-import com.example.deterministicmodelslotsizing.eoq.EOQ;
 
 /**
  * Main class of the application
+ *
  * @Author Tamino Gaub & Maximilian Stablum
  */
 @SpringBootApplication
@@ -26,10 +26,6 @@ public class DeterministicModelsLotSizingApplication {
         // Testing values for the EOQ
         WagnerWhitinAlgorithm wwa = new WagnerWhitinAlgorithm(demands, holdingCost, orderCost);
         wwa.calculate();
-
-        // Calculate the EOQ with help of the algorithm
-        EOQ eoq1 = new EOQ();
-        System.out.println(eoq1.eoqMethod(19, 45, 15));
 
     }
 
