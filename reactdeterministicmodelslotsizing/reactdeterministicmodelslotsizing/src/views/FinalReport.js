@@ -3,13 +3,13 @@ import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/TextLayer.css";
 import "react-pdf/dist/Page/AnnotationLayer.css";
-import report from "../assets/pdf/Term_Project_Proposal_Gaub_Stablum.pdf";
+import report from "../assets/pdf/Term_Project_Report_Gaub_Stablum.pdf";
 
 import { useState } from "react";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
-const Proposal = () => {
+const FinalReport = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -61,4 +61,4 @@ const Proposal = () => {
     </Container>
   );
 };
-export default Proposal;
+export default FinalReport;
